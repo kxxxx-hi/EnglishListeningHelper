@@ -146,16 +146,118 @@ html_content = """
 
             // --- GAME DATA ---
             const antonymData = [
-                { s: ['happy', 'joyful', 'cheerful'], a: 'sad' },
-                { s: ['big', 'large', 'huge'], a: 'small' },
-                { s: ['fast', 'quick', 'rapid'], a: 'slow' },
-                { s: ['hot', 'warm', 'heated'], a: 'cold' },
-                { s: ['beautiful', 'pretty', 'lovely'], a: 'ugly' },
-                { s: ['strong', 'powerful', 'mighty'], a: 'weak' },
-                { s: ['rich', 'wealthy', 'affluent'], a: 'poor' },
-                { s: ['brave', 'courageous', 'bold'], a: 'cowardly' },
-                { s: ['calm', 'peaceful', 'tranquil'], a: 'chaotic' },
-                { s: ['generous', 'giving', 'charitable'], a: 'selfish' },
+                // Vast (广阔的) - Cramped (狭窄的)
+                { s: ['Vast', 'Huge', 'Spacious'], a: 'Cramped' },
+                // Lush (茂盛的) - Barren (荒芜的)
+                { s: ['Lush', 'Abundant', 'Verdant'], a: 'Barren' },
+                // Serene (宁静的) - Turbulent (喧嚣的)
+                { s: ['Serene', 'Peaceful', 'Calm'], a: 'Turbulent' },
+                // Tranquil (安静的) - Noisy (吵闹的)
+                { s: ['Tranquil', 'Quiet', 'Still'], a: 'Noisy' },
+                // Pristine (原始的) - Polluted (受污染的)
+                { s: ['Pristine', 'Spotless', 'Unspoiled'], a: 'Polluted' },
+                // Refreshing (令人精神焕发的) - Stifling (沉闷的)
+                { s: ['Refreshing', 'Invigorating', 'Crisp'], a: 'Stifling' },
+                // Remote (偏远的) - Accessible (易到达的)
+                { s: ['Remote', 'Distant', 'Isolated'], a: 'Accessible' },
+                // Majestic (雄伟的) - Ordinary (普通的)
+                { s: ['Majestic', 'Grand', 'Stately'], a: 'Ordinary' },
+                // Vibrant (充满生机的) - Lifeless (毫无生气的)
+                { s: ['Vibrant', 'Lively', 'Energetic'], a: 'Lifeless' },
+                // Untouched (未被触及的) - Developed (被开发的)
+                { s: ['Untouched', 'Virgin', 'Unspoiled'], a: 'Developed' },
+                // Iconic (标志性的) - Unknown (不知名的)
+                { s: ['Iconic', 'Legendary', 'Famous'], a: 'Unknown' },
+                // Innovative (创新的) - Traditional (传统的)
+                { s: ['Innovative', 'Pioneering', 'Creative'], a: 'Traditional' },
+                // Permanent (永久的) - Temporary (临时的)
+                { s: ['Permanent', 'Lasting', 'Enduring'], a: 'Temporary' },
+                // Massive (巨大的) - Tiny (微小的)
+                { s: ['Massive', 'Enormous', 'Colossal'], a: 'Tiny' },
+                // Smooth (光滑的) - Rough (粗糙的)
+                { s: ['Smooth', 'Polished', 'Sleek'], a: 'Rough' },
+                // Magnificent (壮丽的) - Dull (沉闷的)
+                { s: ['Magnificent', 'Splendid', 'Impressive'], a: 'Dull' },
+                // Empty (空的) - Full (满的)
+                { s: ['Empty', 'Vacant', 'Hollow'], a: 'Full' },
+                // Vertical (垂直的) - Horizontal (水平的)
+                { s: ['Vertical', 'Upright', 'Perpendicular'], a: 'Horizontal' },
+                // Restored (修复的) - Ruined (毁坏的)
+                { s: ['Restored', 'Repaired', 'Renovated'], a: 'Ruined' },
+                // Grand (宏伟的) - Small (小的)
+                { s: ['Grand', 'Majestic', 'Imposing'], a: 'Small' },
+                // Modern (现代的) - Ancient (古老的)
+                { s: ['Modern', 'Contemporary', 'Current'], a: 'Ancient' },
+                // Intricate (错综复杂的) - Simple (简单的)
+                { s: ['Intricate', 'Complex', 'Detailed'], a: 'Simple' },
+                // Unique (独特的) - Common (常见的)
+                { s: ['Unique', 'Distinctive', 'Special'], a: 'Common' },
+                // Symmetrical (对称的) - Asymmetrical (不对称的)
+                { s: ['Symmetrical', 'Balanced', 'Proportional'], a: 'Asymmetrical' },
+                // Solid (坚固的) - Fragile (易碎的)
+                { s: ['Solid', 'Sturdy', 'Durable'], a: 'Fragile' },
+                // Historic (历史悠久的) - New (新的)
+                { s: ['Historic', 'Ancient', 'Old'], a: 'New' },
+                // Functional (实用的) - Decorative (装饰性的)
+                { s: ['Functional', 'Practical', 'Utilitarian'], a: 'Decorative' },
+                // Breathtaking (惊人的) - Unimpressive (不引人注目的)
+                { s: ['Breathtaking', 'Stunning', 'Spectacular'], a: 'Unimpressive' },
+                // Spacious (宽敞的) - Confined (受限的)
+                { s: ['Spacious', 'Roomy', 'Expansive'], a: 'Confined' },
+                // Secluded (隐蔽的) - Crowded (拥挤的)
+                { s: ['Secluded', 'Isolated', 'Private'], a: 'Crowded' },
+                // Harmonious (和谐的) - Disruptive (破坏性的)
+                { s: ['Harmonious', 'Agreeable', 'Peaceful'], a: 'Disruptive' },
+                // Winding (蜿蜒的) - Straight (笔直的)
+                { s: ['Winding', 'Curvy', 'Meandering'], a: 'Straight' },
+                // Cool (凉爽的) - Hot/Sweltering (酷热的)
+                { s: ['Cool', 'Chilly', 'Crisp'], a: 'Hot' },
+                // Dense (茂密的) - Sparse (稀疏的)
+                { s: ['Dense', 'Thick', 'Packed'], a: 'Sparse' },
+                // Calm (平静的) - Rough (崎岖的)
+                { s: ['Calm', 'Serene', 'Tranquil'], a: 'Rough' },
+                // Natural (自然的) - Artificial (人工的)
+                { s: ['Natural', 'Genuine', 'Authentic'], a: 'Artificial' },
+                // Noisy (嘈杂的) - Silent (寂静的)
+                { s: ['Noisy', 'Loud', 'Clamorous'], a: 'Silent' },
+                // Crowded (拥挤的) - Deserted (空旷的)
+                { s: ['Crowded', 'Packed', 'Congested'], a: 'Deserted' },
+                // Vibrant (充满活力的) - Quiet (安静的)
+                { s: ['Vibrant', 'Lively', 'Bustling'], a: 'Quiet' },
+                // Exciting (令人兴奋的) - Boring (无聊的)
+                { s: ['Exciting', 'Thrilling', 'Stimulating'], a: 'Boring' },
+                // Popular (受欢迎的) - Obscure (鲜为人知的)
+                { s: ['Popular', 'Well-known', 'Widespread'], a: 'Obscure' },
+                // Chaotic (混乱的) - Orderly (有秩序的)
+                { s: ['Chaotic', 'Disorderly', 'Haphazard'], a: 'Orderly' },
+                // Loud (大声的) - Hushed / quiet (低声的)
+                { s: ['Loud', 'Deafening', 'Boisterous'], a: 'Hushed' },
+                // Enormous (巨大的) - Small (小的)
+                { s: ['Enormous', 'Immense', 'Gigantic'], a: 'Small' },
+                // Visible (可见的) - Hidden (隐藏的)
+                { s: ['Visible', 'Apparent', 'Obvious'], a: 'Hidden' },
+                // Thrilling (惊心动魄的) - Calm (平静的)
+                { s: ['Thrilling', 'Exciting', 'Exhilarating'], a: 'Calm' },
+                // Temporary (临时的) - Permanent (永久的)
+                { s: ['Temporary', 'Brief', 'Transient'], a: 'Permanent' },
+                // Dirty (脏的) - Clean (干净的)
+                { s: ['Dirty', 'Filthy', 'Soiled'], a: 'Clean' },
+                // Public (公共的) - Private (私人的)
+                { s: ['Public', 'Communal', 'Shared'], a: 'Private' },
+                // Energetic (充满活力的) - Sluggish (低迷的)
+                { s: ['Energetic', 'Active', 'Vigorous'], a: 'Sluggish' },
+                // Organized (有组织的) - Disorganized (杂乱无章的)
+                { s: ['Organized', 'Tidy', 'Systematic'], a: 'Disorganized' },
+                // Central (中心的) - Peripheral (边缘的)
+                { s: ['Central', 'Core', 'Main'], a: 'Peripheral' },
+                // Accessible (可到达的) - Inaccessible (难以到达的)
+                { s: ['Accessible', 'Available', 'Reachable'], a: 'Inaccessible' },
+                // Lively (生动的) - Dull (沉闷的)
+                { s: ['Lively', 'Spirited', 'Vivacious'], a: 'Dull' },
+                // Modern (现代的) - Outdated (过时的)
+                { s: ['Modern', 'Contemporary', 'New'], a: 'Outdated' },
+                // Tense (紧张的) - Relaxed (放松的)
+                { s: ['Tense', 'Stressed', 'Nervous'], a: 'Relaxed' },
             ];
             let currentAntonymQuestion = {};
 
