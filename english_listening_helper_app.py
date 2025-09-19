@@ -282,6 +282,78 @@ html_content = """
                 { s: ['Strategic', 'Tactical', 'Planned'], a: 'Haphazard' },
                 // Inspiring (鼓舞人心的) - Demoralizing (令人沮丧的)
                 { s: ['Inspiring', 'Uplifting', 'Motivating'], a: 'Demoralizing' },
+                
+                // --- 新增词汇 ---
+
+                // 1. 可持续发展
+                { s: ['Sustainability', 'Viability', 'Durability'], a: 'Unsustainability' },
+                { s: ['Conservation', 'Preservation', 'Safeguarding'], a: 'Destruction' },
+                { s: ['Deforestation', 'Logging', 'Forest clearance'], a: 'Reforestation' },
+                { s: ['Biodiversity', 'Variety of life', 'Biological diversity'], a: 'Uniformity' },
+                { s: ['Emission', 'Discharge', 'Output'], a: 'Absorption' },
+                { s: ['Renewable energy', 'Solar', 'Wind'], a: 'Non-renewable energy' },
+                { s: ['Climate change', 'Global warming', 'Climate crisis'], a: 'Climate stability' },
+                { s: ['Pollution', 'Contamination', 'Degradation'], a: 'Purity' },
+                { s: ['Ecosystem', 'Habitat', 'Biome'], a: 'Disruption' },
+                { s: ['Extinction', 'Disappearance', 'Annihilation'], a: 'Survival' },
+            
+                // 2. 旅游
+                { s: ['Itinerary', 'Schedule', 'Travel plan'], a: 'Spontaneity' },
+                { s: ['Accommodation', 'Lodging', 'Residence'], a: 'Nomadism' },
+                { s: ['Hospitality', 'Welcome', 'Friendliness'], a: 'Hostility' },
+                { s: ['Excursion', 'Trip', 'Outing'], a: 'Residency' },
+                { s: ['Voyage', 'Journey', 'Expedition'], a: 'Immobility' },
+                { s: ['Expedition', 'Exploration', 'Adventure'], a: 'Retreat' },
+                { s: ['Backpacking', 'Budget travel', 'Independent travel'], a: 'Luxury travel' },
+                { s: ['Trek', 'Hike', 'Long journey'], a: 'Stroll' },
+                { s: ['Passport', 'Travel document', 'ID'], a: 'Restriction' },
+            
+                // 3. 健康与医学
+                { s: ['Epidemic', 'Outbreak', 'Contagion'], a: 'Wellness' },
+                { s: ['Pandemic', 'Global epidemic', 'Worldwide outbreak'], a: 'Localized outbreak' },
+                { s: ['Immunity', 'Resistance', 'Protection'], a: 'Vulnerability' },
+                { s: ['Vaccination', 'Immunization', 'Inoculation'], a: 'Infection' },
+                { s: ['Nutrition', 'Nourishment', 'Sustenance'], a: 'Deprivation' },
+                { s: ['Malnutrition', 'Undernourishment', 'Deficiency'], a: 'Overnutrition' },
+                { s: ['Obesity', 'Overweight', 'Corpulence'], a: 'Underweight' },
+                { s: ['Rehabilitation', 'Recovery', 'Therapy'], a: 'Deterioration' },
+                { s: ['Prevention', 'Precaution', 'Protection'], a: 'Causation' },
+                { s: ['Therapy', 'Treatment', 'Healing'], a: 'Illness' },
+                { s: ['Surgery', 'Operation', 'Procedure'], a: 'Natural healing' },
+                { s: ['Transplant', 'Graft', 'Implantation'], a: 'Rejection' },
+                { s: ['Genetics', 'Heredity', 'DNA science'], a: 'Nurture' },
+                { s: ['Mental health', 'Psychological well-being', 'Emotional stability'], a: 'Mental illness' },
+                { s: ['Anxiety', 'Nervousness', 'Worry'], a: 'Calmness' },
+                { s: ['Therapy session', 'Counseling', 'Consultation'], a: 'Avoidance' },
+                { s: ['Clinical trial', 'Medical study', 'Drug testing'], a: 'Anecdotal evidence' },
+                { s: ['Placebo', 'Dummy pill', 'Inactive drug'], a: 'Active drug' },
+                { s: ['Pathogen', 'Germ', 'Microbe'], a: 'Antiseptic' },
+                { s: ['Virus', 'Microorganism', 'Contagion'], a: 'Antibody' },
+                { s: ['Bacteria', 'Microbes', 'Germs'], a: 'Antibiotic' },
+                { s: ['Antibiotic', 'Antimicrobial drug', 'Medicine'], a: 'Bacteria' },
+                { s: ['Antiviral', 'Virus-fighting drug', 'Treatment'], a: 'Pro-viral' },
+                { s: ['Herbal remedy', 'Plant medicine', 'Alternative cure'], a: 'Synthetic drug' },
+                { s: ['Alternative medicine', 'Complementary therapy', 'Holistic healing'], a: 'Conventional medicine' },
+                { s: ['Side effect', 'Adverse reaction', 'Secondary effect'], a: 'Intended effect' },
+                { s: ['Life expectancy', 'Lifespan', 'Longevity'], a: 'Mortality rate' },
+                { s: ['Mortality rate', 'Death rate', 'Fatality rate'], a: 'Birth rate' },
+            
+                // 4. 职业与工作
+                { s: ['Employment', 'Job', 'Occupation'], a: 'Unemployment' },
+                { s: ['Unemployment', 'Joblessness', 'Redundancy'], a: 'Employment' },
+                { s: ['Occupation', 'Profession', 'Trade'], a: 'Hobby' },
+                { s: ['Profession', 'Vocation', 'Discipline'], a: 'Amateurism' },
+                { s: ['Apprenticeship', 'Training', 'Internship'], a: 'Mastery' },
+                { s: ['Promotion', 'Advancement', 'Elevation'], a: 'Demotion' },
+                { s: ['Demotion', 'Downgrade', 'Reduction'], a: 'Promotion' },
+                { s: ['Salary', 'Wage', 'Income'], a: 'Debt' },
+                { s: ['Wage', 'Earnings', 'Remuneration'], a: 'Expense' },
+                { s: ['Income', 'Revenue', 'Earning'], a: 'Outgoings' },
+                { s: ['Overtime', 'Extra work', 'Additional hours'], a: 'Leisure time' },
+                { s: ['Benefits', 'Perks', 'Advantages'], a: 'Liabilities' },
+                { s: ['Pension', 'Retirement fund', 'Allowance'], a: 'Current income' },
+                { s: ['Retirement', 'End of career', 'Pensioning off'], a: 'Employment' },
+                { s: ['Job satisfaction', 'Fulfillment', 'Contentment'], a: 'Job dissatisfaction' },
             ];
             let currentAntonymQuestion = {};
 
