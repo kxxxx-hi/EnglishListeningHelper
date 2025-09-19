@@ -146,118 +146,142 @@ html_content = """
 
             // --- GAME DATA ---
             const antonymData = [
-                // Vast (广阔的) - Cramped (狭窄的)
-                { s: ['Vast', 'Huge', 'Spacious'], a: 'Cramped' },
-                // Lush (茂盛的) - Barren (荒芜的)
-                { s: ['Lush', 'Abundant', 'Verdant'], a: 'Barren' },
-                // Serene (宁静的) - Turbulent (喧嚣的)
-                { s: ['Serene', 'Peaceful', 'Calm'], a: 'Turbulent' },
-                // Tranquil (安静的) - Noisy (吵闹的)
-                { s: ['Tranquil', 'Quiet', 'Still'], a: 'Noisy' },
-                // Pristine (原始的) - Polluted (受污染的)
-                { s: ['Pristine', 'Spotless', 'Unspoiled'], a: 'Polluted' },
-                // Refreshing (令人精神焕发的) - Stifling (沉闷的)
-                { s: ['Refreshing', 'Invigorating', 'Crisp'], a: 'Stifling' },
-                // Remote (偏远的) - Accessible (易到达的)
-                { s: ['Remote', 'Distant', 'Isolated'], a: 'Accessible' },
-                // Majestic (雄伟的) - Ordinary (普通的)
-                { s: ['Majestic', 'Grand', 'Stately'], a: 'Ordinary' },
-                // Vibrant (充满生机的) - Lifeless (毫无生气的)
-                { s: ['Vibrant', 'Lively', 'Energetic'], a: 'Lifeless' },
-                // Untouched (未被触及的) - Developed (被开发的)
-                { s: ['Untouched', 'Virgin', 'Unspoiled'], a: 'Developed' },
-                // Iconic (标志性的) - Unknown (不知名的)
-                { s: ['Iconic', 'Legendary', 'Famous'], a: 'Unknown' },
                 // Innovative (创新的) - Traditional (传统的)
-                { s: ['Innovative', 'Pioneering', 'Creative'], a: 'Traditional' },
-                // Permanent (永久的) - Temporary (临时的)
-                { s: ['Permanent', 'Lasting', 'Enduring'], a: 'Temporary' },
-                // Massive (巨大的) - Tiny (微小的)
-                { s: ['Massive', 'Enormous', 'Colossal'], a: 'Tiny' },
-                // Smooth (光滑的) - Rough (粗糙的)
-                { s: ['Smooth', 'Polished', 'Sleek'], a: 'Rough' },
-                // Magnificent (壮丽的) - Dull (沉闷的)
-                { s: ['Magnificent', 'Splendid', 'Impressive'], a: 'Dull' },
-                // Empty (空的) - Full (满的)
-                { s: ['Empty', 'Vacant', 'Hollow'], a: 'Full' },
-                // Vertical (垂直的) - Horizontal (水平的)
-                { s: ['Vertical', 'Upright', 'Perpendicular'], a: 'Horizontal' },
-                // Restored (修复的) - Ruined (毁坏的)
-                { s: ['Restored', 'Repaired', 'Renovated'], a: 'Ruined' },
-                // Grand (宏伟的) - Small (小的)
-                { s: ['Grand', 'Majestic', 'Imposing'], a: 'Small' },
-                // Modern (现代的) - Ancient (古老的)
-                { s: ['Modern', 'Contemporary', 'Current'], a: 'Ancient' },
-                // Intricate (错综复杂的) - Simple (简单的)
-                { s: ['Intricate', 'Complex', 'Detailed'], a: 'Simple' },
-                // Unique (独特的) - Common (常见的)
-                { s: ['Unique', 'Distinctive', 'Special'], a: 'Common' },
-                // Symmetrical (对称的) - Asymmetrical (不对称的)
-                { s: ['Symmetrical', 'Balanced', 'Proportional'], a: 'Asymmetrical' },
-                // Solid (坚固的) - Fragile (易碎的)
-                { s: ['Solid', 'Sturdy', 'Durable'], a: 'Fragile' },
-                // Historic (历史悠久的) - New (新的)
-                { s: ['Historic', 'Ancient', 'Old'], a: 'New' },
-                // Functional (实用的) - Decorative (装饰性的)
-                { s: ['Functional', 'Practical', 'Utilitarian'], a: 'Decorative' },
-                // Breathtaking (惊人的) - Unimpressive (不引人注目的)
-                { s: ['Breathtaking', 'Stunning', 'Spectacular'], a: 'Unimpressive' },
-                // Spacious (宽敞的) - Confined (受限的)
-                { s: ['Spacious', 'Roomy', 'Expansive'], a: 'Confined' },
-                // Secluded (隐蔽的) - Crowded (拥挤的)
-                { s: ['Secluded', 'Isolated', 'Private'], a: 'Crowded' },
-                // Harmonious (和谐的) - Disruptive (破坏性的)
-                { s: ['Harmonious', 'Agreeable', 'Peaceful'], a: 'Disruptive' },
-                // Winding (蜿蜒的) - Straight (笔直的)
-                { s: ['Winding', 'Curvy', 'Meandering'], a: 'Straight' },
-                // Cool (凉爽的) - Hot/Sweltering (酷热的)
-                { s: ['Cool', 'Chilly', 'Crisp'], a: 'Hot' },
-                // Dense (茂密的) - Sparse (稀疏的)
-                { s: ['Dense', 'Thick', 'Packed'], a: 'Sparse' },
-                // Calm (平静的) - Rough (崎岖的)
-                { s: ['Calm', 'Serene', 'Tranquil'], a: 'Rough' },
-                // Natural (自然的) - Artificial (人工的)
-                { s: ['Natural', 'Genuine', 'Authentic'], a: 'Artificial' },
-                // Noisy (嘈杂的) - Silent (寂静的)
-                { s: ['Noisy', 'Loud', 'Clamorous'], a: 'Silent' },
-                // Crowded (拥挤的) - Deserted (空旷的)
-                { s: ['Crowded', 'Packed', 'Congested'], a: 'Deserted' },
-                // Vibrant (充满活力的) - Quiet (安静的)
-                { s: ['Vibrant', 'Lively', 'Bustling'], a: 'Quiet' },
-                // Exciting (令人兴奋的) - Boring (无聊的)
-                { s: ['Exciting', 'Thrilling', 'Stimulating'], a: 'Boring' },
-                // Popular (受欢迎的) - Obscure (鲜为人知的)
-                { s: ['Popular', 'Well-known', 'Widespread'], a: 'Obscure' },
-                // Chaotic (混乱的) - Orderly (有秩序的)
-                { s: ['Chaotic', 'Disorderly', 'Haphazard'], a: 'Orderly' },
-                // Loud (大声的) - Hushed / quiet (低声的)
-                { s: ['Loud', 'Deafening', 'Boisterous'], a: 'Hushed' },
-                // Enormous (巨大的) - Small (小的)
-                { s: ['Enormous', 'Immense', 'Gigantic'], a: 'Small' },
-                // Visible (可见的) - Hidden (隐藏的)
-                { s: ['Visible', 'Apparent', 'Obvious'], a: 'Hidden' },
-                // Thrilling (惊心动魄的) - Calm (平静的)
-                { s: ['Thrilling', 'Exciting', 'Exhilarating'], a: 'Calm' },
-                // Temporary (临时的) - Permanent (永久的)
-                { s: ['Temporary', 'Brief', 'Transient'], a: 'Permanent' },
-                // Dirty (脏的) - Clean (干净的)
-                { s: ['Dirty', 'Filthy', 'Soiled'], a: 'Clean' },
-                // Public (公共的) - Private (私人的)
-                { s: ['Public', 'Communal', 'Shared'], a: 'Private' },
-                // Energetic (充满活力的) - Sluggish (低迷的)
-                { s: ['Energetic', 'Active', 'Vigorous'], a: 'Sluggish' },
-                // Organized (有组织的) - Disorganized (杂乱无章的)
-                { s: ['Organized', 'Tidy', 'Systematic'], a: 'Disorganized' },
-                // Central (中心的) - Peripheral (边缘的)
-                { s: ['Central', 'Core', 'Main'], a: 'Peripheral' },
-                // Accessible (可到达的) - Inaccessible (难以到达的)
-                { s: ['Accessible', 'Available', 'Reachable'], a: 'Inaccessible' },
-                // Lively (生动的) - Dull (沉闷的)
-                { s: ['Lively', 'Spirited', 'Vivacious'], a: 'Dull' },
-                // Modern (现代的) - Outdated (过时的)
-                { s: ['Modern', 'Contemporary', 'New'], a: 'Outdated' },
-                // Tense (紧张的) - Relaxed (放松的)
-                { s: ['Tense', 'Stressed', 'Nervous'], a: 'Relaxed' },
+                { s: ['Innovative', 'Original', 'Creative'], a: 'Traditional' },
+                // Unconventional (非传统的) - Conventional (传统的)
+                { s: ['Unconventional', 'Unorthodox', 'Offbeat'], a: 'Conventional' },
+                // Idiosyncratic (特质的) - Common (常见的)
+                { s: ['Idiosyncratic', 'Peculiar', 'Distinctive'], a: 'Common' },
+                // Eclectic (折衷的) - Uniform (统一的)
+                { s: ['Eclectic', 'Diverse', 'Varied'], a: 'Uniform' },
+                // Whimsical (异想天开的) - Serious (严肃的)
+                { s: ['Whimsical', 'Playful', 'Fanciful'], a: 'Serious' },
+                // Visionary (有远见的) - Short-sighted (目光短浅的)
+                { s: ['Visionary', 'Forward-looking', 'Prophetic'], a: 'Short-sighted' },
+                // Pioneering (开创性的) - Following (追随者)
+                { s: ['Pioneering', 'Groundbreaking', 'Leading'], a: 'Following' },
+                // Quirky (古怪的) - Normal (正常的)
+                { s: ['Quirky', 'Peculiar', 'Odd'], a: 'Normal' },
+                // Aesthetic (审美的) - Unappealing (不吸引人的)
+                { s: ['Aesthetic', 'Artistic', 'Beautiful'], a: 'Unappealing' },
+                // Profound (深奥的) - Superficial (肤浅的)
+                { s: ['Profound', 'Deep', 'Meaningful'], a: 'Superficial' },
+                // Introspective (内省的) - Extroverted (外向的)
+                { s: ['Introspective', 'Meditative', 'Reflective'], a: 'Extroverted' },
+                // Maverick (特立独行的) - Conformist (墨守成规的)
+                { s: ['Maverick', 'Rebel', 'Individualist'], a: 'Conformist' },
+                // Versatile (多才多艺的) - Inflexible (不灵活的)
+                { s: ['Versatile', 'Adaptable', 'Flexible'], a: 'Inflexible' },
+                // Charismatic (有魅力的) - Uninspiring (乏味的)
+                { s: ['Charismatic', 'Magnetic', 'Charming'], a: 'Uninspiring' },
+                // Uninhibited (无拘无束的) - Reserved (内敛的)
+                { s: ['Uninhibited', 'Free-spirited', 'Spontaneous'], a: 'Reserved' },
+                // Compassionate (有同情心的) - Cruel (残忍的)
+                { s: ['Compassionate', 'Caring', 'Sympathetic'], a: 'Cruel' },
+                // Empathetic (有同理心的) - Indifferent (漠不关心的)
+                { s: ['Empathetic', 'Understanding', 'Sensitive'], a: 'Indifferent' },
+                // Loyal (忠诚的) - Treacherous (背信弃义的)
+                { s: ['Loyal', 'Faithful', 'Devoted'], a: 'Treacherous' },
+                // Reliable (可靠的) - Untrustworthy (不可靠的)
+                { s: ['Reliable', 'Trustworthy', 'Dependable'], a: 'Untrustworthy' },
+                // Sincere (真诚的) - Insincere (不真诚的)
+                { s: ['Sincere', 'Genuine', 'Heartfelt'], a: 'Insincere' },
+                // Affectionate (深情的) - Cold (冷淡的)
+                { s: ['Affectionate', 'Loving', 'Warm'], a: 'Cold' },
+                // Supportive (支持的) - Unhelpful (无助的)
+                { s: ['Supportive', 'Encouraging', 'Helpful'], a: 'Unhelpful' },
+                // Genuine (真诚的) - Fake (假的)
+                { s: ['Genuine', 'Authentic', 'Real'], a: 'Fake' },
+                // Kind-hearted (好心的) - Mean (刻薄的)
+                { s: ['Kind-hearted', 'Benevolent', 'Generous'], a: 'Mean' },
+                // Selfless (无私的) - Selfish (自私的)
+                { s: ['Selfless', 'Altruistic', 'Giving'], a: 'Selfish' },
+                // Candid (坦率的) - Deceptive (欺骗的)
+                { s: ['Candid', 'Frank', 'Open'], a: 'Deceptive' },
+                // Understanding (善解人意的) - Intolerant (不宽容的)
+                { s: ['Understanding', 'Tolerant', 'Patient'], a: 'Intolerant' },
+                // Dependable (值得信赖的) - Unreliable (不可靠的)
+                { s: ['Dependable', 'Reliable', 'Trustworthy'], a: 'Unreliable' },
+                // Patient (有耐心的) - Impatient (不耐烦的)
+                { s: ['Patient', 'Tolerant', 'Calm'], a: 'Impatient' },
+                // Humble (谦逊的) - Arrogant (傲慢的)
+                { s: ['Humble', 'Modest', 'Meek'], a: 'Arrogant' },
+                // Benevolent (仁慈的) - Malicious (恶毒的)
+                { s: ['Benevolent', 'Kind', 'Generous'], a: 'Malicious' },
+                // Encouraging (鼓舞人心的) - Discouraging (令人沮丧的)
+                { s: ['Encouraging', 'Inspiring', 'Uplifting'], a: 'Discouraging' },
+                // Thoughtful (体贴的) - Thoughtless (不体贴的)
+                { s: ['Thoughtful', 'Considerate', 'Mindful'], a: 'Thoughtless' },
+                // Gracious (亲切的) - Rude (粗鲁的)
+                { s: ['Gracious', 'Courteous', 'Polite'], a: 'Rude' },
+                // Principled (有原则的) - Unprincipled (无原则的)
+                { s: ['Principled', 'Ethical', 'Moral'], a: 'Unprincipled' },
+                // Witty (机智的) - Dull (乏味的)
+                { s: ['Witty', 'Clever', 'Humorous'], a: 'Dull' },
+                // Perceptive (有洞察力的) - Oblivious (未察觉的)
+                { s: ['Perceptive', 'Insightful', 'Discerning'], a: 'Oblivious' },
+                // Prudent (审慎的) - Reckless (鲁莽的)
+                { s: ['Prudent', 'Cautious', 'Wise'], a: 'Reckless' },
+                // Insightful (富有见地的) - Shallow (肤浅的)
+                { s: ['Insightful', 'Perceptive', 'Discerning'], a: 'Shallow' },
+                // Cultivated (有教养的) - Uncouth (粗俗的)
+                { s: ['Cultivated', 'Refined', 'Educated'], a: 'Uncouth' },
+                // Philosophical (哲学的) - Practical (实际的)
+                { s: ['Philosophical', 'Pensive', 'Intellectual'], a: 'Practical' },
+                // Resilient (有弹性的、坚韧的) - Fragile (脆弱的)
+                { s: ['Resilient', 'Tough', 'Durable'], a: 'Fragile' },
+                // Enlightened (开明的) - Ignorant (无知的)
+                { s: ['Enlightened', 'Educated', 'Informed'], a: 'Ignorant' },
+                // Rational (理性的) - Irrational (不理性的)
+                { s: ['Rational', 'Logical', 'Reasonable'], a: 'Irrational' },
+                // Discreet (谨慎的) - Obvious (明显的)
+                { s: ['Discreet', 'Cautious', 'Circumspect'], a: 'Obvious' },
+                // Judicious (明断的) - Imprudent (不慎重的)
+                { s: ['Judicious', 'Wise', 'Sensible'], a: 'Imprudent' },
+                // Reflective (沉思的) - Spontaneous (冲动的)
+                { s: ['Reflective', 'Thoughtful', 'Contemplative'], a: 'Spontaneous' },
+                // Astute (敏锐的) - Naive (天真的)
+                { s: ['Astute', 'Shrewd', 'Clever'], a: 'Naive' },
+                // Driven (有上进心的) - Apathetic (冷漠的)
+                { s: ['Driven', 'Ambitious', 'Motivated'], a: 'Apathetic' },
+                // Ambitious (有抱负的) - Content (知足的)
+                { s: ['Ambitious', 'Determined', 'Aspiring'], a: 'Content' },
+                // Persistent (坚持不懈的) - Quitting (放弃的)
+                { s: ['Persistent', 'Tenacious', 'Relentless'], a: 'Quitting' },
+                // Resolute (坚决的) - Hesitant (犹豫的)
+                { s: ['Resolute', 'Firm', 'Steadfast'], a: 'Hesitant' },
+                // Energetic (精力充沛的) - Lethargic (无精打采的)
+                { s: ['Energetic', 'Vigorous', 'Dynamic'], a: 'Lethargic' },
+                // Disciplined (有纪律的) - Undisciplined (无纪律的)
+                { s: ['Disciplined', 'Controlled', 'Methodical'], a: 'Undisciplined' },
+                // Relentless (不懈的) - Half-hearted (三心二意的)
+                { s: ['Relentless', 'Persistent', 'Unrelenting'], a: 'Half-hearted' },
+                // Proactive (积极主动的) - Reactive (被动的)
+                { s: ['Proactive', 'Initiating', 'Forward-thinking'], a: 'Reactive' },
+                // Meticulous (一丝不苟的) - Careless (粗心的)
+                { s: ['Meticulous', 'Thorough', 'Precise'], a: 'Careless' },
+                // Dedicated (敬业的) - Indifferent (漠不关心的)
+                { s: ['Dedicated', 'Committed', 'Devoted'], a: 'Indifferent' },
+                // Goal-oriented (以目标为导向的) - Aimless (无目标的)
+                { s: ['Goal-oriented', 'Focused', 'Purposeful'], a: 'Aimless' },
+                // Assertive (自信的) - Passive (被动的)
+                { s: ['Assertive', 'Confident', 'Decisive'], a: 'Passive' },
+                // Resourceful (足智多谋的) - Helpless (无助的)
+                { s: ['Resourceful', 'Ingenious', 'Clever'], a: 'Helpless' },
+                // Perseverant (有毅力的) - Faltering (动摇的)
+                { s: ['Perseverant', 'Persistent', 'Steadfast'], a: 'Faltering' },
+                // Determined (有决心的) - Undecided (未决的)
+                { s: ['Determined', 'Resolute', 'Firm'], a: 'Undecided' },
+                // Competitive (有竞争力的) - Cooperative (合作的)
+                { s: ['Competitive', 'Rivalrous', 'Ambitious'], a: 'Cooperative' },
+                // Tenacious (坚韧的) - Weak (弱小的)
+                { s: ['Tenacious', 'Resolute', 'Stubborn'], a: 'Weak' },
+                // Audacious (大胆的) - Cautious (谨慎的)
+                { s: ['Audacious', 'Bold', 'Daring'], a: 'Cautious' },
+                // Strategic (有战略性的) - Haphazard (杂乱无章的)
+                { s: ['Strategic', 'Tactical', 'Planned'], a: 'Haphazard' },
+                // Inspiring (鼓舞人心的) - Demoralizing (令人沮丧的)
+                { s: ['Inspiring', 'Uplifting', 'Motivating'], a: 'Demoralizing' },
             ];
             let currentAntonymQuestion = {};
 
