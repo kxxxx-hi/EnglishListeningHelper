@@ -413,6 +413,7 @@ html_content = """
             let currentAntonymQuestion = {};
 
             const pronunciationData = [
+            /*
                 { correct: 'counter', distractors: ['couter', 'kaunter', 'countor'] },
                 { correct: 'video', distractors: ['viedo', 'vidio', 'vido'] },
                 { correct: 'written work', distractors: ['writtin work', 'writen work', 'writin work'] },
@@ -486,6 +487,60 @@ html_content = """
                 { correct: 'living quarters', distractors: ['living quaters', 'living quorters', 'living quaterss'] },
                 { correct: 'halls of residence', distractors: ['halls of residence', 'halls of resedence', 'halls of residdence'] },
                 { correct: 'resources room', distractors: ['resorces room', 'ressources room', 'resourcess room'] },
+                */
+
+
+
+                { word: "community", distractors: ["comunity", "communiity", "comunitee"], translation: "社区" },
+                { word: "population", distractors: ["populasion", "populattion", "populaton"], translation: "人口" },
+                { word: "demographics", distractors: ["demografics", "demographicks", "demographcs"], translation: "人口统计" },
+                { word: "urbanization", distractors: ["urbanisation", "urbanizasion", "urbanisation"], translation: "城市化" },
+                { word: "suburbanization", distractors: ["suburbanisation", "suburbanizasion", "subarbanization"], translation: "郊区化" },
+                { word: "migration", distractors: ["migrasion", "migraton", "migraition"], translation: "移民/迁徙" },
+                { word: "immigration", distractors: ["imigration", "immigrasion", "immigraton"], translation: "移民进入" },
+                { word: "emigration", distractors: ["emmigration", "emigrasion", "emigraton"], translation: "移民外出" },
+                { word: "multiculturalism", distractors: ["multiculturism", "multiculturealism", "multicultralism"], translation: "多元文化主义" },
+                { word: "assimilation", distractors: ["asimilation", "assimilasion", "assimiliation"], translation: "融合" },
+                { word: "integration", distractors: ["intigration", "integrasion", "intagration"], translation: "融合" },
+                { word: "segregation", distractors: ["segreagation", "segregattion", "segregetion"], translation: "隔离" },
+                { word: "inequality", distractors: ["inequallity", "inequalety", "inequalitty"], translation: "不平等" },
+                { word: "poverty", distractors: ["povverty", "poverety", "povertyy"], translation: "贫困" },
+                { word: "affluence", distractors: ["affluance", "aflluence", "affluencee"], translation: "富裕" },
+                { word: "social mobility", distractors: ["social mobilitty", "social mobilety", "sociial mobility"], translation: "社会流动" },
+                { word: "class system", distractors: ["class sistim", "clas system", "classs system"], translation: "阶级制度" },
+                { word: "hierarchy", distractors: ["heirarchy", "hierachy", "hierarky"], translation: "等级制度" },
+                { word: "discrimination", distractors: ["discrimanation", "discriminattion", "discremination"], translation: "歧视" },
+                { word: "prejudice", distractors: ["prejedice", "prejudise", "prejudisce"], translation: "偏见" },
+                { word: "racism", distractors: ["racisim", "racisum", "racisme"], translation: "种族主义" },
+                { word: "sexism", distractors: ["sexims", "sexissm", "sexizm"], translation: "性别歧视" },
+                { word: "ageism", distractors: ["ageizm", "ageisms", "ageisim"], translation: "年龄歧视" },
+                { word: "feminism", distractors: ["feminisim", "feminissm", "feminizm"], translation: "女权主义" },
+                { word: "activism", distractors: ["activisim", "activisum", "activisme"], translation: "行动主义" },
+                { word: "civil rights", distractors: ["civil rigths", "civel rights", "civil rightss"], translation: "公民权利" },
+                { word: "human rights", distractors: ["human rigths", "human rightss", "human rites"], translation: "人权" },
+                { word: "legislation", distractors: ["legislasion", "legistlation", "legisation"], translation: "立法" },
+                { word: "policy", distractors: ["pollicy", "polocy", "polisy"], translation: "政策" },
+                { word: "governance", distractors: ["governanse", "governancee", "governance"], translation: "治理" },
+                { word: "government", distractors: ["goverment", "governmant", "governmint"], translation: "政府" },
+                { word: "authority", distractors: ["autherity", "authoritty", "autority"], translation: "权威/当局" },
+                { word: "bureaucracy", distractors: ["bureacracy", "burocracy", "bureucracy"], translation: "官僚体制" },
+                { word: "welfare", distractors: ["welfair", "welafre", "welafare"], translation: "福利" },
+                { word: "healthcare system", distractors: ["health care system", "healtcare system", "hethcare system"], translation: "医疗体系" },
+                { word: "education system", distractors: ["educasion system", "edjucation system", "educations system"], translation: "教育体系" },
+                { word: "public services", distractors: ["public servises", "public servicess", "pubblic services"], translation: "公共服务" },
+                { word: "infrastructure", distractors: ["infrastruture", "infrastructture", "infastructure"], translation: "基础设施" },
+                { word: "transport system", distractors: ["tranport system", "transpport system", "transport sistim"], translation: "交通体系" },
+                { word: "justice system", distractors: ["justise system", "justic system", "justise sistim"], translation: "司法体系" },
+                { word: "law enforcement", distractors: ["law enforsement", "law enforcment", "law enforcmant"], translation: "执法" },
+                { word: "crime rate", distractors: ["crrime rate", "cime rate", "krim rate"], translation: "犯罪率" },
+                { word: "social norm", distractors: ["social normm", "sosial norm", "soacial norm"], translation: "社会规范" },
+                { word: "cultural heritage", distractors: ["culturral heritage", "cultural haritage", "cultural herritage"], translation: "文化遗产" },
+                { word: "tradition", distractors: ["tradission", "traditionn", "tradition"], translation: "传统" },
+                { word: "ritual", distractors: ["ritul", "rittual", "rituel"], translation: "仪式" },
+                { word: "festival", distractors: ["festivall", "festivel", "festaval"], translation: "节日" },
+                { word: "civic duty", distractors: ["civic dutty", "civik duty", "cevic duty"], translation: "公民义务" },
+                { word: "volunteering", distractors: ["voluntering", "voluntaring", "volunterring"], translation: "志愿服务" },
+                { word: "philanthropy", distractors: ["filanthropy", "philanthorpy", "philanthrophy"], translation: "慈善事业" }
             ];
             let currentPronunciationQuestion = {};
 
