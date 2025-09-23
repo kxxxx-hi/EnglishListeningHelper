@@ -74,8 +74,8 @@ html_content = """
             <!-- Flashcards Mode -->
             <div id="view-flashcards" class="space-y-6">
                 <div>
-                    <label for="word-list" class="block text-sm font-medium text-gray-700">Customize Word List (comma-separated)</label>
-                    <textarea id="word-list" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., apple, beautiful, challenge, ..."></textarea>
+                    <label for="correct-list" class="block text-sm font-medium text-gray-700">Customize correct List (comma-separated)</label>
+                    <textarea id="correct-list" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="e.g., apple, beautiful, challenge, ..."></textarea>
                     <button id="save-list-btn" class="mt-2 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Save and Use This List
                     </button>
@@ -83,25 +83,25 @@ html_content = """
                 
                 <div class="bg-gray-50 rounded-lg p-6 text-center shadow-inner">
                     <div id="flashcard-container" class="card">
-                        <p id="flashcard-instruction" class="text-gray-500 mb-4">Click the speaker to hear the word.</p>
+                        <p id="flashcard-instruction" class="text-gray-500 mb-4">Click the speaker to hear the correct.</p>
                         <button id="play-audio-btn" class="w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 hover:bg-indigo-200 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                         </button>
-                        <div id="word-reveal" class="mt-4 h-10">
-                            <h2 id="word-text" class="text-4xl font-bold text-gray-800 invisible"></h2>
+                        <div id="correct-reveal" class="mt-4 h-10">
+                            <h2 id="correct-text" class="text-4xl font-bold text-gray-800 invisible"></h2>
                         </div>
                     </div>
-                     <button id="reveal-word-btn" class="mt-4 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Reveal Word
+                     <button id="reveal-correct-btn" class="mt-4 inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Reveal correct
                     </button>
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <button id="prev-word-btn" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
+                    <button id="prev-correct-btn" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     </button>
-                    <span id="word-counter" class="text-sm font-medium text-gray-600">1 / 10</span>
-                    <button id="next-word-btn" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
+                    <span id="correct-counter" class="text-sm font-medium text-gray-600">1 / 10</span>
+                    <button id="next-correct-btn" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                     </button>
                 </div>
@@ -111,7 +111,7 @@ html_content = """
             <div id="view-antonym" class="hidden space-y-6">
                 <div class="bg-gray-50 rounded-lg p-6 text-center shadow-inner card">
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Exclude the Antonym</h3>
-                    <p class="text-gray-500 mb-6">Three words are synonyms. Click the one that is the antonym.</p>
+                    <p class="text-gray-500 mb-6">Three corrects are synonyms. Click the one that is the antonym.</p>
                     <div id="antonym-choices" class="grid grid-cols-2 gap-4 w-full max-w-md">
                         <!-- Buttons will be generated here -->
                     </div>
@@ -122,8 +122,8 @@ html_content = """
             <!-- Pronunciation Game -->
             <div id="view-pronunciation" class="hidden space-y-6">
                 <div class="bg-gray-50 rounded-lg p-6 text-center shadow-inner card">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Choose the Correct Word</h3>
-                    <p class="text-gray-500 mb-6">Listen to the audio and click the matching word.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Choose the Correct correct</h3>
+                    <p class="text-gray-500 mb-6">Listen to the audio and click the matching correct.</p>
                      <button id="play-pronunciation-audio-btn" class="mb-6 w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 hover:bg-indigo-200 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
                     </button>
@@ -140,8 +140,8 @@ html_content = """
         document.addEventListener('DOMContentLoaded', () => {
             // --- STATE MANAGEMENT ---
             let currentMode = 'flashcards';
-            let wordList = ['eloquent', 'gregarious', 'resilience', 'ubiquitous', 'ephemeral', 'serendipity', 'magnanimous', 'perspicacious', 'conundrum', 'juxtaposition'];
-            let currentWordIndex = 0;
+            let correctList = ['eloquent', 'gregarious', 'resilience', 'ubiquitous', 'ephemeral', 'serendipity', 'magnanimous', 'perspicacious', 'conundrum', 'juxtaposition'];
+            let currentcorrectIndex = 0;
             const synth = window.speechSynthesis;
 
             // --- GAME DATA ---
@@ -491,56 +491,56 @@ html_content = """
 
 
 
-                { word: "community", distractors: ["comunity", "communiity", "comunitee"], translation: "社区" },
-                { word: "population", distractors: ["populasion", "populattion", "populaton"], translation: "人口" },
-                { word: "demographics", distractors: ["demografics", "demographicks", "demographcs"], translation: "人口统计" },
-                { word: "urbanization", distractors: ["urbanisation", "urbanizasion", "urbanisation"], translation: "城市化" },
-                { word: "suburbanization", distractors: ["suburbanisation", "suburbanizasion", "subarbanization"], translation: "郊区化" },
-                { word: "migration", distractors: ["migrasion", "migraton", "migraition"], translation: "移民/迁徙" },
-                { word: "immigration", distractors: ["imigration", "immigrasion", "immigraton"], translation: "移民进入" },
-                { word: "emigration", distractors: ["emmigration", "emigrasion", "emigraton"], translation: "移民外出" },
-                { word: "multiculturalism", distractors: ["multiculturism", "multiculturealism", "multicultralism"], translation: "多元文化主义" },
-                { word: "assimilation", distractors: ["asimilation", "assimilasion", "assimiliation"], translation: "融合" },
-                { word: "integration", distractors: ["intigration", "integrasion", "intagration"], translation: "融合" },
-                { word: "segregation", distractors: ["segreagation", "segregattion", "segregetion"], translation: "隔离" },
-                { word: "inequality", distractors: ["inequallity", "inequalety", "inequalitty"], translation: "不平等" },
-                { word: "poverty", distractors: ["povverty", "poverety", "povertyy"], translation: "贫困" },
-                { word: "affluence", distractors: ["affluance", "aflluence", "affluencee"], translation: "富裕" },
-                { word: "social mobility", distractors: ["social mobilitty", "social mobilety", "sociial mobility"], translation: "社会流动" },
-                { word: "class system", distractors: ["class sistim", "clas system", "classs system"], translation: "阶级制度" },
-                { word: "hierarchy", distractors: ["heirarchy", "hierachy", "hierarky"], translation: "等级制度" },
-                { word: "discrimination", distractors: ["discrimanation", "discriminattion", "discremination"], translation: "歧视" },
-                { word: "prejudice", distractors: ["prejedice", "prejudise", "prejudisce"], translation: "偏见" },
-                { word: "racism", distractors: ["racisim", "racisum", "racisme"], translation: "种族主义" },
-                { word: "sexism", distractors: ["sexims", "sexissm", "sexizm"], translation: "性别歧视" },
-                { word: "ageism", distractors: ["ageizm", "ageisms", "ageisim"], translation: "年龄歧视" },
-                { word: "feminism", distractors: ["feminisim", "feminissm", "feminizm"], translation: "女权主义" },
-                { word: "activism", distractors: ["activisim", "activisum", "activisme"], translation: "行动主义" },
-                { word: "civil rights", distractors: ["civil rigths", "civel rights", "civil rightss"], translation: "公民权利" },
-                { word: "human rights", distractors: ["human rigths", "human rightss", "human rites"], translation: "人权" },
-                { word: "legislation", distractors: ["legislasion", "legistlation", "legisation"], translation: "立法" },
-                { word: "policy", distractors: ["pollicy", "polocy", "polisy"], translation: "政策" },
-                { word: "governance", distractors: ["governanse", "governancee", "governance"], translation: "治理" },
-                { word: "government", distractors: ["goverment", "governmant", "governmint"], translation: "政府" },
-                { word: "authority", distractors: ["autherity", "authoritty", "autority"], translation: "权威/当局" },
-                { word: "bureaucracy", distractors: ["bureacracy", "burocracy", "bureucracy"], translation: "官僚体制" },
-                { word: "welfare", distractors: ["welfair", "welafre", "welafare"], translation: "福利" },
-                { word: "healthcare system", distractors: ["health care system", "healtcare system", "hethcare system"], translation: "医疗体系" },
-                { word: "education system", distractors: ["educasion system", "edjucation system", "educations system"], translation: "教育体系" },
-                { word: "public services", distractors: ["public servises", "public servicess", "pubblic services"], translation: "公共服务" },
-                { word: "infrastructure", distractors: ["infrastruture", "infrastructture", "infastructure"], translation: "基础设施" },
-                { word: "transport system", distractors: ["tranport system", "transpport system", "transport sistim"], translation: "交通体系" },
-                { word: "justice system", distractors: ["justise system", "justic system", "justise sistim"], translation: "司法体系" },
-                { word: "law enforcement", distractors: ["law enforsement", "law enforcment", "law enforcmant"], translation: "执法" },
-                { word: "crime rate", distractors: ["crrime rate", "cime rate", "krim rate"], translation: "犯罪率" },
-                { word: "social norm", distractors: ["social normm", "sosial norm", "soacial norm"], translation: "社会规范" },
-                { word: "cultural heritage", distractors: ["culturral heritage", "cultural haritage", "cultural herritage"], translation: "文化遗产" },
-                { word: "tradition", distractors: ["tradission", "traditionn", "tradition"], translation: "传统" },
-                { word: "ritual", distractors: ["ritul", "rittual", "rituel"], translation: "仪式" },
-                { word: "festival", distractors: ["festivall", "festivel", "festaval"], translation: "节日" },
-                { word: "civic duty", distractors: ["civic dutty", "civik duty", "cevic duty"], translation: "公民义务" },
-                { word: "volunteering", distractors: ["voluntering", "voluntaring", "volunterring"], translation: "志愿服务" },
-                { word: "philanthropy", distractors: ["filanthropy", "philanthorpy", "philanthrophy"], translation: "慈善事业" }
+                { correct: "community", distractors: ["comunity", "communiity", "comunitee"], translation: "社区" },
+                { correct: "population", distractors: ["populasion", "populattion", "populaton"], translation: "人口" },
+                { correct: "demographics", distractors: ["demografics", "demographicks", "demographcs"], translation: "人口统计" },
+                { correct: "urbanization", distractors: ["urbanisation", "urbanizasion", "urbanisation"], translation: "城市化" },
+                { correct: "suburbanization", distractors: ["suburbanisation", "suburbanizasion", "subarbanization"], translation: "郊区化" },
+                { correct: "migration", distractors: ["migrasion", "migraton", "migraition"], translation: "移民/迁徙" },
+                { correct: "immigration", distractors: ["imigration", "immigrasion", "immigraton"], translation: "移民进入" },
+                { correct: "emigration", distractors: ["emmigration", "emigrasion", "emigraton"], translation: "移民外出" },
+                { correct: "multiculturalism", distractors: ["multiculturism", "multiculturealism", "multicultralism"], translation: "多元文化主义" },
+                { correct: "assimilation", distractors: ["asimilation", "assimilasion", "assimiliation"], translation: "融合" },
+                { correct: "integration", distractors: ["intigration", "integrasion", "intagration"], translation: "融合" },
+                { correct: "segregation", distractors: ["segreagation", "segregattion", "segregetion"], translation: "隔离" },
+                { correct: "inequality", distractors: ["inequallity", "inequalety", "inequalitty"], translation: "不平等" },
+                { correct: "poverty", distractors: ["povverty", "poverety", "povertyy"], translation: "贫困" },
+                { correct: "affluence", distractors: ["affluance", "aflluence", "affluencee"], translation: "富裕" },
+                { correct: "social mobility", distractors: ["social mobilitty", "social mobilety", "sociial mobility"], translation: "社会流动" },
+                { correct: "class system", distractors: ["class sistim", "clas system", "classs system"], translation: "阶级制度" },
+                { correct: "hierarchy", distractors: ["heirarchy", "hierachy", "hierarky"], translation: "等级制度" },
+                { correct: "discrimination", distractors: ["discrimanation", "discriminattion", "discremination"], translation: "歧视" },
+                { correct: "prejudice", distractors: ["prejedice", "prejudise", "prejudisce"], translation: "偏见" },
+                { correct: "racism", distractors: ["racisim", "racisum", "racisme"], translation: "种族主义" },
+                { correct: "sexism", distractors: ["sexims", "sexissm", "sexizm"], translation: "性别歧视" },
+                { correct: "ageism", distractors: ["ageizm", "ageisms", "ageisim"], translation: "年龄歧视" },
+                { correct: "feminism", distractors: ["feminisim", "feminissm", "feminizm"], translation: "女权主义" },
+                { correct: "activism", distractors: ["activisim", "activisum", "activisme"], translation: "行动主义" },
+                { correct: "civil rights", distractors: ["civil rigths", "civel rights", "civil rightss"], translation: "公民权利" },
+                { correct: "human rights", distractors: ["human rigths", "human rightss", "human rites"], translation: "人权" },
+                { correct: "legislation", distractors: ["legislasion", "legistlation", "legisation"], translation: "立法" },
+                { correct: "policy", distractors: ["pollicy", "polocy", "polisy"], translation: "政策" },
+                { correct: "governance", distractors: ["governanse", "governancee", "governance"], translation: "治理" },
+                { correct: "government", distractors: ["goverment", "governmant", "governmint"], translation: "政府" },
+                { correct: "authority", distractors: ["autherity", "authoritty", "autority"], translation: "权威/当局" },
+                { correct: "bureaucracy", distractors: ["bureacracy", "burocracy", "bureucracy"], translation: "官僚体制" },
+                { correct: "welfare", distractors: ["welfair", "welafre", "welafare"], translation: "福利" },
+                { correct: "healthcare system", distractors: ["health care system", "healtcare system", "hethcare system"], translation: "医疗体系" },
+                { correct: "education system", distractors: ["educasion system", "edjucation system", "educations system"], translation: "教育体系" },
+                { correct: "public services", distractors: ["public servises", "public servicess", "pubblic services"], translation: "公共服务" },
+                { correct: "infrastructure", distractors: ["infrastruture", "infrastructture", "infastructure"], translation: "基础设施" },
+                { correct: "transport system", distractors: ["tranport system", "transpport system", "transport sistim"], translation: "交通体系" },
+                { correct: "justice system", distractors: ["justise system", "justic system", "justise sistim"], translation: "司法体系" },
+                { correct: "law enforcement", distractors: ["law enforsement", "law enforcment", "law enforcmant"], translation: "执法" },
+                { correct: "crime rate", distractors: ["crrime rate", "cime rate", "krim rate"], translation: "犯罪率" },
+                { correct: "social norm", distractors: ["social normm", "sosial norm", "soacial norm"], translation: "社会规范" },
+                { correct: "cultural heritage", distractors: ["culturral heritage", "cultural haritage", "cultural herritage"], translation: "文化遗产" },
+                { correct: "tradition", distractors: ["tradission", "traditionn", "tradition"], translation: "传统" },
+                { correct: "ritual", distractors: ["ritul", "rittual", "rituel"], translation: "仪式" },
+                { correct: "festival", distractors: ["festivall", "festivel", "festaval"], translation: "节日" },
+                { correct: "civic duty", distractors: ["civic dutty", "civik duty", "cevic duty"], translation: "公民义务" },
+                { correct: "volunteering", distractors: ["voluntering", "voluntaring", "volunterring"], translation: "志愿服务" },
+                { correct: "philanthropy", distractors: ["filanthropy", "philanthorpy", "philanthrophy"], translation: "慈善事业" }
             ];
             let currentPronunciationQuestion = {};
 
@@ -557,14 +557,14 @@ html_content = """
             };
 
             // Flashcard Elements
-            const wordListInput = document.getElementById('word-list');
+            const correctListInput = document.getElementById('correct-list');
             const saveListBtn = document.getElementById('save-list-btn');
             const playAudioBtn = document.getElementById('play-audio-btn');
-            const revealWordBtn = document.getElementById('reveal-word-btn');
-            const wordText = document.getElementById('word-text');
-            const prevWordBtn = document.getElementById('prev-word-btn');
-            const nextWordBtn = document.getElementById('next-word-btn');
-            const wordCounter = document.getElementById('word-counter');
+            const revealcorrectBtn = document.getElementById('reveal-correct-btn');
+            const correctText = document.getElementById('correct-text');
+            const prevcorrectBtn = document.getElementById('prev-correct-btn');
+            const nextcorrectBtn = document.getElementById('next-correct-btn');
+            const correctCounter = document.getElementById('correct-counter');
             const flashcardInstruction = document.getElementById('flashcard-instruction');
 
             // Antonym Game Elements
@@ -613,18 +613,18 @@ html_content = """
             // Flashcard Functions
             const updateFlashcardView = () => {
                 flashcardInstruction.classList.remove('hidden');
-                wordText.textContent = wordList[currentWordIndex];
-                wordText.classList.add('invisible');
-                wordCounter.textContent = `${currentWordIndex + 1} / ${wordList.length}`;
+                correctText.textContent = correctList[currentcorrectIndex];
+                correctText.classList.add('invisible');
+                correctCounter.textContent = `${currentcorrectIndex + 1} / ${correctList.length}`;
             };
 
-            const saveWordList = () => {
-                const words = wordListInput.value.split(',')
-                    .map(word => word.trim())
-                    .filter(word => word.length > 0);
-                if (words.length > 0) {
-                    wordList = words;
-                    currentWordIndex = 0;
+            const savecorrectList = () => {
+                const corrects = correctListInput.value.split(',')
+                    .map(correct => correct.trim())
+                    .filter(correct => correct.length > 0);
+                if (corrects.length > 0) {
+                    correctList = corrects;
+                    currentcorrectIndex = 0;
                     updateFlashcardView();
                 }
             };
@@ -646,18 +646,18 @@ html_content = """
                 });
             };
 
-            const checkAntonymAnswer = (selectedWord) => {
+            const checkAntonymAnswer = (selectedcorrect) => {
                 const buttons = antonymChoicesContainer.querySelectorAll('button');
                 buttons.forEach(btn => {
                     btn.disabled = true;
                     if (btn.textContent === currentAntonymQuestion.a) {
                         btn.classList.add('correct');
-                    } else if (btn.textContent === selectedWord) {
+                    } else if (btn.textContent === selectedcorrect) {
                         btn.classList.add('incorrect');
                     }
                 });
                 
-                if (selectedWord === currentAntonymQuestion.a) {
+                if (selectedcorrect === currentAntonymQuestion.a) {
                     antonymFeedback.textContent = 'Correct!';
                     antonymFeedback.className = 'h-6 text-center font-medium text-green-600';
                 } else {
@@ -685,18 +685,18 @@ html_content = """
                 });
             };
 
-            const checkPronunciationAnswer = (selectedWord) => {
+            const checkPronunciationAnswer = (selectedcorrect) => {
                  const buttons = pronunciationChoicesContainer.querySelectorAll('button');
                 buttons.forEach(btn => {
                     btn.disabled = true;
                     if (btn.textContent === currentPronunciationQuestion.correct) {
                         btn.classList.add('correct');
-                    } else if (btn.textContent === selectedWord) {
+                    } else if (btn.textContent === selectedcorrect) {
                         btn.classList.add('incorrect');
                     }
                 });
                 
-                if (selectedWord === currentPronunciationQuestion.correct) {
+                if (selectedcorrect === currentPronunciationQuestion.correct) {
                     pronunciationFeedback.textContent = 'Correct!';
                     pronunciationFeedback.className = 'h-6 text-center font-medium text-green-600';
                 } else {
@@ -714,25 +714,25 @@ html_content = """
 
             // Flashcard listeners
             playAudioBtn.addEventListener('click', () => {
-                speak(wordList[currentWordIndex]);
+                speak(correctList[currentcorrectIndex]);
             });
 
-            revealWordBtn.addEventListener('click', () => {
+            revealcorrectBtn.addEventListener('click', () => {
                 flashcardInstruction.classList.add('hidden');
-                wordText.classList.remove('invisible');
+                correctText.classList.remove('invisible');
             });
 
-            nextWordBtn.addEventListener('click', () => {
-                currentWordIndex = (currentWordIndex + 1) % wordList.length;
+            nextcorrectBtn.addEventListener('click', () => {
+                currentcorrectIndex = (currentcorrectIndex + 1) % correctList.length;
                 updateFlashcardView();
             });
 
-            prevWordBtn.addEventListener('click', () => {
-                currentWordIndex = (currentWordIndex - 1 + wordList.length) % wordList.length;
+            prevcorrectBtn.addEventListener('click', () => {
+                currentcorrectIndex = (currentcorrectIndex - 1 + correctList.length) % correctList.length;
                 updateFlashcardView();
             });
 
-            saveListBtn.addEventListener('click', saveWordList);
+            saveListBtn.addEventListener('click', savecorrectList);
 
             // Pronunciation game listener
             playPronunciationAudioBtn.addEventListener('click', () => {
@@ -741,7 +741,7 @@ html_content = """
 
 
             // --- INITIALIZATION ---
-            wordListInput.value = wordList.join(', ');
+            correctListInput.value = correctList.join(', ');
             updateFlashcardView();
             switchMode('flashcards'); // Start in flashcards mode
         });
