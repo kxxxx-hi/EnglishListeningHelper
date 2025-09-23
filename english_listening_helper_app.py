@@ -146,6 +146,7 @@ html_content = """
 
             // --- GAME DATA ---
             const antonymData = [
+            /*
                 // Innovative (创新的) - Traditional (传统的)
                 { s: ['Innovative', 'Original', 'Creative'], a: 'Traditional' },
                 // Unconventional (非传统的) - Conventional (传统的)
@@ -354,6 +355,60 @@ html_content = """
                 { s: ['Pension', 'Retirement fund', 'Allowance'], a: 'Current income' },
                 { s: ['Retirement', 'End of career', 'Pensioning off'], a: 'Employment' },
                 { s: ['Job satisfaction', 'Fulfillment', 'Contentment'], a: 'Job dissatisfaction' },
+                */
+
+
+                // 5. Society
+                { s: ['Community', 'Neighborhood', 'Collective'], a: 'Isolation' },
+                { s: ['Population', 'Inhabitants', 'Residents'], a: 'Depopulation' },
+                { s: ['Demographics', 'Population data', 'Statistics'], a: 'Anecdotes' },
+                { s: ['Urbanization', 'City development', 'Metropolitan growth'], a: 'Ruralization' },
+                { s: ['Suburbanization', 'Suburban growth', 'Urban sprawl'], a: 'Centralization' },
+                { s: ['Migration', 'Relocation', 'Resettlement'], a: 'Immobility' },
+                { s: ['Immigration', 'In-migration', 'Entry'], a: 'Emigration' },
+                { s: ['Emigration', 'Out-migration', 'Departure'], a: 'Immigration' },
+                { s: ['Multiculturalism', 'Cultural diversity', 'Pluralism'], a: 'Homogeneity' },
+                { s: ['Assimilation', 'Integration', 'Incorporation'], a: 'Segregation' },
+                { s: ['Integration', 'Inclusion', 'Unification'], a: 'Exclusion' },
+                { s: ['Segregation', 'Separation', 'Division'], a: 'Integration' },
+                { s: ['Inequality', 'Disparity', 'Imbalance'], a: 'Equality' },
+                { s: ['Poverty', 'Destitution', 'Deprivation'], a: 'Affluence' },
+                { s: ['Affluence', 'Wealth', 'Prosperity'], a: 'Poverty' },
+                { s: ['Social mobility', 'Class movement', 'Upward mobility'], a: 'Social stagnation' },
+                { s: ['Class system', 'Social hierarchy', 'Stratification'], a: 'Classless society' },
+                { s: ['Hierarchy', 'Ranking', 'Structure'], a: 'Anarchy' },
+                { s: ['Discrimination', 'Prejudice', 'Bias'], a: 'Fairness' },
+                { s: ['Prejudice', 'Intolerance', 'Unfair judgment'], a: 'Tolerance' },
+                { s: ['Racism', 'Racial discrimination', 'Bigotry'], a: 'Racial equality' },
+                { s: ['Sexism', 'Gender bias', 'Inequality'], a: 'Gender equality' },
+                { s: ['Ageism', 'Age bias', 'Generational prejudice'], a: 'Age equality' },
+                { s: ['Feminism', 'Women’s rights', 'Gender equality'], a: 'Misogyny' },
+                { s: ['Activism', 'Advocacy', 'Campaigning'], a: 'Passivity' },
+                { s: ['Civil rights', 'Freedoms', 'Equal rights'], a: 'Oppression' },
+                { s: ['Human rights', 'Fundamental rights', 'Entitlements'], a: 'Abuse of rights' },
+                { s: ['Legislation', 'Lawmaking', 'Statute'], a: 'Deregulation' },
+                { s: ['Policy', 'Strategy', 'Guideline'], a: 'Randomness' },
+                { s: ['Governance', 'Administration', 'Control'], a: 'Mismanagement' },
+                { s: ['Government', 'Administration', 'Regime'], a: 'Anarchy' },
+                { s: ['Authority', 'Power', 'Control'], a: 'Subordination' },
+                { s: ['Bureaucracy', 'Officialdom', 'Red tape'], a: 'Efficiency' },
+                { s: ['Welfare', 'Well-being', 'Benefits'], a: 'Hardship' },
+                { s: ['Healthcare system', 'Medical services', 'Hospital system'], a: 'Health decline' },
+                { s: ['Education system', 'Schooling system', 'Academic structure'], a: 'Ignorance' },
+                { s: ['Public services', 'Utilities', 'Community support'], a: 'Private services' },
+                { s: ['Infrastructure', 'Facilities', 'Framework'], a: 'Dilapidation' },
+                { s: ['Transport system', 'Transit network', 'Public transport'], a: 'Private transport' },
+                { s: ['Justice system', 'Courts', 'Legal framework'], a: 'Injustice' },
+                { s: ['Law enforcement', 'Policing', 'Authorities'], a: 'Lawlessness' },
+                { s: ['Crime rate', 'Level of crime', 'Criminal statistics'], a: 'Peacefulness' },
+                { s: ['Social norm', 'Custom', 'Expectation'], a: 'Deviance' },
+                { s: ['Cultural heritage', 'Tradition', 'Legacy'], a: 'Cultural loss' },
+                { s: ['Tradition', 'Custom', 'Heritage'], a: 'Modernity' },
+                { s: ['Ritual', 'Ceremony', 'Custom'], a: 'Spontaneity' },
+                { s: ['Festival', 'Celebration', 'Holiday'], a: 'Routine' },
+                { s: ['Civic duty', 'Responsibility', 'Public service'], a: 'Negligence' },
+                { s: ['Volunteering', 'Unpaid work', 'Community service'], a: 'Mandatory work' },
+                { s: ['Philanthropy', 'Charity', 'Generosity'], a: 'Stinginess' }
             ];
             let currentAntonymQuestion = {};
 
