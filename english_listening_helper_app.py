@@ -66,7 +66,11 @@ html_content = """
                 </button>
                 <button id="tab-pronunciation" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
                     Pronunciation Game
+                </button>            
+                <button id="tab-minimalpairs" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                  Which one are you hearing?
                 </button>
+
             </nav>
         </div>
 
@@ -133,6 +137,23 @@ html_content = """
                 </div>
                 <div id="pronunciation-feedback" class="h-6 text-center font-medium"></div>
             </div>
+            <!-- 2) Add this new view block somewhere inside <main> (parallel to the other views) -->
+            <div id="view-minimalpairs" class="hidden space-y-6">
+              <div class="bg-gray-50 rounded-lg p-6 text-center shadow-inner card">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Which one are you hearing?</h3>
+                <p class="text-gray-500 mb-6">Click the speaker, then choose the word you heard.</p>
+                <button id="play-minimalpairs-audio-btn" class="mb-6 w-24 h-24 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 hover:bg-indigo-200 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  </svg>
+                </button>
+                <div id="minimalpairs-choices" class="grid grid-cols-2 gap-4 w-full max-w-md">
+                  <!-- Two buttons will be injected here -->
+                </div>
+              </div>
+              <div id="minimalpairs-feedback" class="h-6 text-center font-medium"></div>
+</div>
+
         </main>
     </div>
 
@@ -679,6 +700,195 @@ html_content = """
 
             ];
             let currentPronunciationQuestion = {};
+
+            // 3) In the <script> section, add to STATE and DATA
+            let currentMinimalPairsQuestion = {};
+            const minimalPairsData = [
+            
+
+              // Common minimal pairs for listening
+                { correct: 'desert', distractor: 'dessert' },
+                { correct: 'metal', distractor: 'medal' },
+                { correct: 'ship', distractor: 'sheep' },
+                { correct: 'live', distractor: 'leave' },
+                { correct: 'bit', distractor: 'beat' },
+                { correct: 'sit', distractor: 'seat' },
+                { correct: 'fill', distractor: 'feel' },
+                { correct: 'full', distractor: 'fool' },
+                { correct: 'pull', distractor: 'pool' },
+                { correct: 'rich', distractor: 'reach' },
+                { correct: 'slip', distractor: 'sleep' },
+                { correct: 'rid', distractor: 'reed' },
+                { correct: 'bin', distractor: 'bean' },
+                { correct: 'hid', distractor: 'heed' },
+                { correct: 'wick', distractor: 'week' },
+                { correct: 'mill', distractor: 'meal' },
+                { correct: 'pill', distractor: 'peel' },
+                { correct: 'still', distractor: 'steel' },
+                { correct: 'grin', distractor: 'green' },
+                { correct: 'lick', distractor: 'leak' },
+                { correct: 'fit', distractor: 'feet' },
+                { correct: 'list', distractor: 'least' },
+                { correct: 'sick', distractor: 'seek' },
+                { correct: 'chip', distractor: 'cheap' },
+                { correct: 'pitch', distractor: 'peach' },
+                
+                // /æ/ vs /e/
+                { correct: 'pan', distractor: 'pen' },
+                { correct: 'bad', distractor: 'bed' },
+                { correct: 'bat', distractor: 'bet' },
+                { correct: 'man', distractor: 'men' },
+                { correct: 'back', distractor: 'beck' },
+                { correct: 'jam', distractor: 'gem' },
+                { correct: 'pack', distractor: 'peck' },
+                { correct: 'mat', distractor: 'met' },
+                { correct: 'sad', distractor: 'said' },
+                { correct: 'ham', distractor: 'hem' },
+                
+                // /æ/ vs /ʌ/
+                { correct: 'cap', distractor: 'cup' },
+                { correct: 'back', distractor: 'buck' },
+                { correct: 'bat', distractor: 'but' },
+                { correct: 'pan', distractor: 'pun' },
+                { correct: 'bag', distractor: 'bug' },
+                
+                // /ʌ/ vs /ɒ/ (short o)
+                { correct: 'cut', distractor: 'cot' },
+                { correct: 'luck', distractor: 'lock' },
+                { correct: 'duck', distractor: 'dock' },
+                { correct: 'mug', distractor: 'mog' },
+                { correct: 'sun', distractor: 'son' },
+                
+                // /ʊ/ vs /uː/
+                { correct: 'look', distractor: 'luke' },
+                { correct: 'wood', distractor: 'wooed' },
+                { correct: 'could', distractor: 'cooed' },
+                { correct: 'foot', distractor: 'food' },
+                { correct: 'good', distractor: 'gooed' },
+                
+                // /e/ vs /eɪ/
+                { correct: 'late', distractor: 'let' },
+                { correct: 'made', distractor: 'med' },
+                { correct: 'sale', distractor: 'sell' },
+                { correct: 'pain', distractor: 'pen' },
+                { correct: 'tail', distractor: 'tell' },
+                
+                // short o vs long o (core request)
+                { correct: 'not', distractor: 'note' },
+                { correct: 'cot', distractor: 'coat' },
+                { correct: 'rod', distractor: 'road' },
+                { correct: 'got', distractor: 'goat' },
+                { correct: 'hop', distractor: 'hope' },
+                { correct: 'rob', distractor: 'robe' },
+                { correct: 'con', distractor: 'cone' },
+                { correct: 'cod', distractor: 'code' },
+                { correct: 'tot', distractor: 'toad' },
+                { correct: 'shod', distractor: 'showed' },
+                { correct: 'on', distractor: 'own' },
+                
+                // /ɔː/ vs /oʊ/
+                { correct: 'law', distractor: 'low' },
+                { correct: 'walk', distractor: 'woke' },
+                { correct: 'cork', distractor: 'coke' },
+                { correct: 'boat', distractor: 'bought' },
+                { correct: 'bowl', distractor: 'ball' },
+                
+                // r-controlled or length contrasts often tricky for CN learners
+                { correct: 'ball', distractor: 'bawl' },
+                { correct: 'born', distractor: 'bone' },
+                { correct: 'foam', distractor: 'form' },
+                { correct: 'short', distractor: 'shot' },
+                
+                // Requested pairs
+                { correct: 'ground', distractor: 'grunt' },
+                { correct: 'pet', distractor: 'fat' },
+                
+                // Common consonant confusions that still hinge on vowel clarity
+                { correct: 'pair', distractor: 'fair' },
+                { correct: 'right', distractor: 'light' },
+                { correct: 'rice', distractor: 'lice' },
+                { correct: 'road', distractor: 'load' },
+                { correct: 'thin', distractor: 'tin' },
+                { correct: 'think', distractor: 'sink' },
+                { correct: 'seat', distractor: 'sheet' },
+                { correct: 'sip', distractor: 'ship' },
+                { correct: 'sale', distractor: 'shale' },
+                { correct: 'vest', distractor: 'west' },
+                
+                // More short o vs long o practice
+                { correct: 'collar', distractor: 'caller' },
+                { correct: 'pool', distractor: 'pole' },
+                { correct: 'goal', distractor: 'gall' },
+                { correct: 'told', distractor: 'toad' },
+                { correct: 'dole', distractor: 'doll' },
+                { correct: 'cold', distractor: 'called' },
+                { correct: 'coat', distractor: 'court' },
+                { correct: 'foal', distractor: 'fall' },
+                { correct: 'code', distractor: 'cawed' },
+                { correct: 'load', distractor: 'loud' },
+                { correct: 'rode', distractor: 'rod' },
+                { correct: 'tone', distractor: 'ton' }
+
+            ];
+            
+            // 4) Extend DOM element maps
+            views.minimalpairs = document.getElementById('view-minimalpairs');
+            tabs.minimalpairs = document.getElementById('tab-minimalpairs');
+            
+            const playMinimalPairsAudioBtn = document.getElementById('play-minimalpairs-audio-btn');
+            const minimalPairsChoicesContainer = document.getElementById('minimalpairs-choices');
+            const minimalPairsFeedback = document.getElementById('minimalpairs-feedback');
+            
+            // 5) Extend switchMode to initialize the new game
+            // inside switchMode(mode) after other ifs:
+            if (mode === 'minimalpairs') setupMinimalPairsGame();
+            
+            // 6) Game setup and checking
+            const setupMinimalPairsGame = () => {
+              minimalPairsFeedback.textContent = '';
+              const q = minimalPairsData[Math.floor(Math.random() * minimalPairsData.length)];
+              const target = Math.random() < 0.5 ? q.correct : q.distractor; // play one of the two
+              currentMinimalPairsQuestion = { ...q, target };
+            
+              const choices = shuffleArray([q.correct, q.distractor]);
+              minimalPairsChoicesContainer.innerHTML = '';
+              choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.textContent = choice;
+                btn.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
+                btn.onclick = () => checkMinimalPairsAnswer(choice);
+                minimalPairsChoicesContainer.appendChild(btn);
+              });
+            };
+            
+            const checkMinimalPairsAnswer = (selected) => {
+              const buttons = minimalPairsChoicesContainer.querySelectorAll('button');
+              buttons.forEach(btn => {
+                btn.disabled = true;
+                if (btn.textContent === currentMinimalPairsQuestion.target) {
+                  btn.classList.add('correct');
+                } else if (btn.textContent === selected) {
+                  btn.classList.add('incorrect');
+                }
+              });
+            
+              if (selected === currentMinimalPairsQuestion.target) {
+                minimalPairsFeedback.textContent = 'Correct!';
+                minimalPairsFeedback.className = 'h-6 text-center font-medium text-green-600';
+              } else {
+                minimalPairsFeedback.textContent = 'Not quite. Try the next one!';
+                minimalPairsFeedback.className = 'h-6 text-center font-medium text-red-600';
+              }
+            
+              setTimeout(setupMinimalPairsGame, 2000);
+            };
+            
+            // 7) Event listeners
+            tabs.minimalpairs.addEventListener('click', () => switchMode('minimalpairs'));
+            playMinimalPairsAudioBtn.addEventListener('click', () => {
+              speak(currentMinimalPairsQuestion.target);
+            });
+
 
             // --- DOM ELEMENTS ---
             const views = {
