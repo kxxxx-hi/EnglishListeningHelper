@@ -1,4 +1,3 @@
-
 {
   "flashcards": [
     "eloquent", "gregarious", "resilience", "ubiquitous", "ephemeral",
@@ -168,7 +167,7 @@
 
     { "correct": "erect", "distractors": ["irrect", "ereckt", "erec t"], "translation": "直立的;竖立;建立" },
     { "correct": "crossroads", "distractors": ["cross roads", "crossroades", "crossroad"], "translation": "十字路口" },
-    { "correct": "traffic congestion", "distractors": ["traffic conjustion", "traffic congession", "trafic congestion"], "translation": "交通拥堵" },  ],
+    { "correct": "traffic congestion", "distractors": ["traffic conjustion", "traffic congession", "trafic congestion"], "translation": "交通拥堵" },  ]
 
   "minimalPairs": [
     { "correct": "desert", "distractor": "dessert" },
