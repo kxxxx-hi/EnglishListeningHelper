@@ -541,6 +541,142 @@ html_content = """
                 { correct: "civic duty", distractors: ["civic dutty", "civik duty", "cevic duty"], translation: "公民义务" },
                 { correct: "volunteering", distractors: ["voluntering", "voluntaring", "volunterring"], translation: "志愿服务" },
                 { correct: "philanthropy", distractors: ["filanthropy", "philanthorpy", "philanthrophy"], translation: "慈善事业" }
+
+                
+                { "correct": "vulnerable", "distractors": ["volnerable", "vunerable", "vulnarable"], "translation": "脆弱的;易受伤的" },
+                { "correct": "infectious", "distractors": ["infectioud", "infectous", "infecious"], "translation": "传染性的;有感染力的" },
+                { "correct": "physician", "distractors": ["physicians", "phycisian", "physican"], "translation": "医生;内科医生" },
+                { "correct": "practitioner", "distractors": ["prectationer", "practicioner", "practitoner"], "translation": "实践者;从业者;执业者" },
+                { "correct": "veterinarian", "distractors": ["viterynarian", "veterinarien", "veterianarian"], "translation": "兽医" },
+                { "correct": "have a stuffed nose", "distractors": ["have a stuff nose", "have a stuffed noes", "have a stufed nose"], "translation": "鼻塞的；鼻子不通气的" },
+                { "correct": "quarantine service", "distractors": ["quaranting service", "quarentine service", "quarantine servise"], "translation": "检疫服务；隔离检疫部门" },
+                { "correct": "composition", "distractors": ["composation", "compositon", "componsition"], "translation": "构成;作品;（学生）作文;创作技巧" },
+                { "correct": "claw", "distractors": ["clwa", "clow", "claww"], "translation": "爪;钳;抓" },
+                { "correct": "predator", "distractors": ["prediter", "predetor", "preditor"], "translation": "掠夺者;捕食性动物;食肉动物" },
+                { "correct": "proliferate", "distractors": ["preliverate", "proliferete", "proliferat"], "translation": "激增" },
+                { "correct": "photosynthesis", "distractors": ["photosynthetic", "photosinthesis", "photosynthisis"], "translation": "光合作⽤" },
+                { "correct": "ozone", "distractors": ["ozne", "ozon", "oazone"], "translation": "臭氧" },
+                { "correct": "salinity", "distractors": ["salinaty", "salinityy", "salinirty"], "translation": "盐分;含盐量" },
+                { "correct": "carbohydrate", "distractors": ["caberhtdrate", "carbohydreate", "carbohidrate"], "translation": "碳水化合物;糖类" },
+                { "correct": "descend", "distractors": ["descenf", "desend", "desscend"], "translation": "下降;突然造访;突袭;沦落;起源" },
+                { "correct": "dinosaur", "distractors": ["dinosaut", "dinasaur", "dinosour"], "translation": "恐龙" },
+                { "correct": "ostrich", "distractors": ["ostrach", "ostrichh", "ostrish"], "translation": "鸵鸟" },
+                { "correct": "pollinate", "distractors": ["pellenate", "polinate", "pollinatee"], "translation": "授粉;传粉" },
+                { "correct": "limbs", "distractors": ["limbd", "limbses", "lombs"], "translation": "肢体;大树枝" },
+                { "correct": "wheat", "distractors": ["wheak", "wheet", "wheate"], "translation": "小麦;小麦色" },
+                { "correct": "barley", "distractors": ["bulley", "barly", "barleyy"], "translation": "大麦;大麦粒" },
+                { "correct": "poultry", "distractors": ["pultry", "poutry", "poulty"], "translation": "家禽" },
+                { "correct": "merchant", "distractors": ["murchant", "merchent", "merchand"], "translation": "商人" },
+                { "correct": "physiology", "distractors": ["physilogy", "physiollogy", "physiologie"], "translation": "生理学" },
+                { "correct": "sanctuary", "distractors": ["sanctary", "sancuary", "sanctuery"], "translation": "避难所;庇护所;庇护;圣所" },
+                { "correct": "hibernation", "distractors": ["hybernation", "hibernasion", "hibernantion"], "translation": "冬眠" },
+                { "correct": "nutrient", "distractors": ["nutriant", "nutrientt", "nutreint"], "translation": "营养的;营养物" },
+                { "correct": "reproduction", "distractors": ["reperduction", "reproducton", "reprodution"], "translation": "生殖;繁殖;复制" },
+                { "correct": "hatch out", "distractors": ["huntch out", "hacth out", "hatchout"], "translation": "（尤指小鸡等）孵出；孵化完成" },
+                { "correct": "monogamous", "distractors": ["monogomous", "monogamouss", "monogamouse"], "translation": "一夫一妻制的" },
+                { "correct": "fatal", "distractors": ["phyt", "fatel", "fatol"], "translation": "致命的;灾难性的" },
+                { "correct": "parasite", "distractors": ["parisite", "parasight", "parasitee"], "translation": "寄生虫;寄生生物;依赖他人过活者" },
+                { "correct": "deforestation", "distractors": ["diforestation", "deforistation", "deforastation"], "translation": "采伐森林;森林开伐" },
+                { "correct": "cholesterol", "distractors": ["colesterol", "cholestrol", "cholesteral"], "translation": "胆固醇" },
+                { "correct": "amino acid", "distractors": ["aminal asid", "amino acide", "ameno acid"], "translation": "氨基酸（构成蛋白质的基本单位）" },
+                { "correct": "bitterness", "distractors": ["bitternuse", "biterness", "bitteress"], "translation": "苦味，苦" },
+                { "correct": "kilocalorie", "distractors": ["kilocallery", "kilocalory", "kilokalorie"], "translation": "千卡;大卡" },
+                { "correct": "metabolism", "distractors": ["matabolism", "metablism", "metabolisim"], "translation": "新陈代谢" },
+                { "correct": "indigestible", "distractors": ["indigestable", "indigestiable", "indigestiblee"], "translation": "难消化的，无法消化的" },
+                { "correct": "eradicate", "distractors": ["irridicate", "eradictate", "eradicatee"], "translation": "消灭;灭绝;根除" },
+                { "correct": "reptile", "distractors": ["reptail", "ripeta", "reptille"], "translation": "爬行动物;爬虫类的" },
+                { "correct": "dolphin", "distractors": ["dophin", "dolfin", "dolphine"], "translation": "海豚" },
+        
+                { "correct": "flora", "distractors": ["s", "florra", "florae"], "translation": "植物群落" },
+                { "correct": "pouch", "distractors": ["pawch", "pouth", "pouchh"], "translation": "小袋;囊状袋;育儿袋;装入袋中" },
+                { "correct": "scale", "distractors": ["skill", "scal", "scales"], "translation": "规模;等级;秤;刻度;比例（尺）;改变…大小;攀登" },
+                { "correct": "produce", "distractors": ["produc", "pruduce", "producee"], "translation": "生产;制造;出示;导致;农产品" },
+                { "correct": "poultry", "distractors": ["pultry", "poulrty", "poutry"], "translation": "家禽" },
+                { "correct": "livestock", "distractors": ["lifestock", "livestok", "livestockk"], "translation": "家畜;牲畜" },
+                { "correct": "fishstock", "distractors": ["fish stock", "fishstok", "fishstcok"], "translation": "鱼群；鱼类资源" },
+                { "correct": "herd", "distractors": ["hurt", "herdd", "heard"], "translation": "兽群;放牧;（强制）集合" },
+                { "correct": "cereal crops", "distractors": ["therialcrops", "cerealcrops", "cereal corp"], "translation": "谷类作物" },
+                
+                
+                { "correct": "craftsman", "distractors": ["crafsment", "craftsmen", "craftman"], "translation": "工匠;手艺人;匠人" },
+                
+                { "correct": "quarry", "distractors": ["quary", "qurry", "quarryy"], "translation": "采石场;猎物;挖出;苦心找出" },
+                { "correct": "cottage", "distractors": ["catage", "cottige", "cottgae"], "translation": "村舍;小屋;小别墅" },
+                
+                { "correct": "engine room", "distractors": ["engineer", "engineroom", "engine rum"], "translation": "发动机舱；机舱" },
+                { "correct": "steam engine", "distractors": ["sti", "steam engin", "steem engine"], "translation": "蒸汽机" },
+                { "correct": "infirmary", "distractors": ["infermary", "infirmery", "infimary"], "translation": "医院;医务室" },
+                { "correct": "wrist", "distractors": ["rist", "wrists", "wristt"], "translation": "手腕;腕关节" },
+                
+                
+                { "correct": "insomnia", "distractors": ["insomia", "insomnea", "insomniya"], "translation": "失眠（症）" },
+                { "correct": "pulse", "distractors": ["pouse", "pluse", "pulss"], "translation": "脉冲;脉搏;搏动" },
+                { "correct": "diabetic", "distractors": ["diabetiv", "diabettic", "diabatic"], "translation": "糖尿病的;适合糖尿病患者的" },
+                { "correct": "remedy", "distractors": ["ramedy", "remidy", "remedey"], "translation": "疗法;纠正办法;纠正;治疗" },
+                { "correct": "therapy", "distractors": ["thearapy", "theraphy", "therpy"], "translation": "治疗;疗法" },
+                { "correct": "acupuncture", "distractors": ["accupancture", "acupunture", "acupuntcure"], "translation": "针刺疗法;对…施行针刺疗法" },
+                { "correct": "prescribe", "distractors": ["perscribe", "prescrib", "prescripbe"], "translation": "开药方;规定" },
+                { "correct": "pharmacy", "distractors": ["farmercy", "pharmasy", "pharamcy"], "translation": "药房;药剂学" },
+                { "correct": "vaccinate", "distractors": ["vacacinate", "vacinatte", "vaccinatee"], "translation": "接种疫苗;预防接种" },
+                { "correct": "painkiller", "distractors": ["pain killer", "pankiller", "painkiler"], "translation": "止痛药" },
+                { "correct": "aspirin", "distractors": ["asiprin", "aspirinr", "asprin"], "translation": "阿司匹林" },
+                
+                { "correct": "side effect", "distractors": ["sidifect", "side afect", "sideefffect"], "translation": "副作用；意外的附带结果" },
+                
+                { "correct": "sneeze", "distractors": ["snees", "snezee", "sneese"], "translation": "喷嚏;打喷嚏" },
+                
+                
+                
+                { "correct": "dwellings", "distractors": ["duwllings", "dwelings", "dwellinges"], "translation": "住处；住宅" },
+                { "correct": "pottery", "distractors": ["potery", "pottry", "poterry"], "translation": "陶器;陶土;制陶手艺" },
+                { "correct": "eyesight", "distractors": ["eyesite", "eyesigh", "eyesights"], "translation": "视力;视觉" },
+                { "correct": "vision", "distractors": ["vasion", "vission", "vison"], "translation": "视野;视力;想象;幻象" },
+                { "correct": "sting", "distractors": ["stin", "stinng", "stingg"], "translation": "刺;刺痛" },
+                { "correct": "pest", "distractors": ["past", "pestt", "pext"], "translation": "害虫；有害动物；讨厌的人" },
+                { "correct": "vitamin", "distractors": ["vatamin", "vitaman", "vitimin"], "translation": "维生素;维他命" },
+                { "correct": "metal", "distractors": ["matal", "metel", "metall"], "translation": "金属" },
+                
+                { "correct": "endangered", "distractors": ["indangered", "endagered", "endangerd"], "translation": "濒临灭绝的" },
+                { "correct": "infect", "distractors": ["infact", "infectt", "inffect"], "translation": "传染;感染" },
+                { "correct": "toxin", "distractors": ["toxi", "toxine", "toxinr"], "translation": "毒素;毒质" },
+                { "correct": "survival", "distractors": ["servival", "survivel", "survial"], "translation": "生存;存活;幸存" },
+                { "correct": "digest", "distractors": ["dygest", "diggest", "digesst"], "translation": "摘要;消化;领会" },
+                { "correct": "tongue", "distractors": ["touge", "tounge", "tonguee"], "translation": "舌头;语言" },
+                { "correct": "conservation", "distractors": ["concervation", "conser vation", "conservasion"], "translation": "保护;保存;节约" },
+                { "correct": "territory", "distractors": ["taritory", "terretory", "territery"], "translation": "领土;领域" },
+                { "correct": "inhabit", "distractors": ["in habit", "inhabite", "inhbit"], "translation": "居住于;栖息" },
+                { "correct": "habitat", "distractors": ["habitate", "habbitat", "habitatte"], "translation": "栖息地;居留地;产地" },
+                { "correct": "amphibian", "distractors": ["anthebian", "amphiban", "amphibien"], "translation": "两栖动物" },
+                
+                { "correct": "steering wheel", "distractors": ["stearingwheel", "steering wheal", "steerng wheel"], "translation": "方向盘" },
+                { "correct": "instrument panel", "distractors": ["instrumentpanal", "instrument pannel", "instrumen panel"], "translation": "仪表板" },
+                { "correct": "mileage", "distractors": ["miledge", "milage", "milege"], "translation": "英里里程;英里数" },
+                { "correct": "engine size", "distractors": ["engineecize", "engine sizee", "engin size"], "translation": "发动机排量" },
+                { "correct": "auditorium", "distractors": ["orditoriam", "auditoriam", "auditorum"], "translation": "礼堂;听众席" },
+                { "correct": "cloakroom", "distractors": ["clorkroom", "clockroom", "cloakrom"], "translation": "衣帽间;厕所" },
+                { "correct": "escalator", "distractors": ["exalator", "escelator", "escalater"], "translation": "自动扶梯" },
+                { "correct": "foyer", "distractors": ["foya", "foyyer", "foier"], "translation": "门厅;休息室" },
+                { "correct": "ceiling", "distractors": ["siling", "ceilling", "cealin g"], "translation": "天花板" },
+                { "correct": "sculpture", "distractors": ["scopture", "sculputre", "sclupture"], "translation": "雕刻（术）;雕塑品" },
+                { "correct": "exterior", "distractors": ["exduera", "exterier", "exteriorr"], "translation": "外观;外部的" },
+                { "correct": "refurbish", "distractors": ["referbish", "refurbrish", "refurbsh"], "translation": "翻新;整修" },
+                { "correct": "reconstruct", "distractors": ["reconstract", "reconstuct", "recontruct"], "translation": "重建;重现" },
+                { "correct": "demolition", "distractors": ["demilation", "demoliton", "demolision"], "translation": "摧毁;拆除" },
+                
+                { "correct": "concert hall", "distractors": ["concin", "concert halll", "consert hall"], "translation": "音乐厅；演奏厅" },
+                { "correct": "venue", "distractors": ["veniue", "veneu", "vennue"], "translation": "举办地点;会场" },
+                
+                { "correct": "footpath", "distractors": ["footpass", "footpth", "footpathh"], "translation": "人行道;小路" },
+                { "correct": "pavement", "distractors": ["payment", "pavemant", "pavment"], "translation": "路面;人行道" },
+                
+                { "correct": "erect", "distractors": ["irrect", "ereckt", "erec t"], "translation": "直立的;竖立;建立" },
+                { "correct": "crossroads", "distractors": ["cross roads", "crossroades", "crossroad"], "translation": "十字路口" },
+                { "correct": "traffic congestion", "distractors": ["traffic conjustion", "traffic congession", "trafic congestion"], "translation": "交通拥堵" },
+                
+                
+                
+
+
             ];
             let currentPronunciationQuestion = {};
 
