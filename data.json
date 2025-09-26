@@ -301,5 +301,41 @@
     { "correct": "fan", "distractor": "fang" },
     { "correct": "tan", "distractor": "tang" },
     { "correct": "thin", "distractor": "thing" }
+
+    { "correct": "a big ship", "distractor": "a big sheep" },
+    { "correct": "I live here", "distractor": "I leave here" },
+    { "correct": "sit down, please", "distractor": "seat down, please" },
+    { "correct": "fill the bin", "distractor": "feel the bean" },
+    { "correct": "pull the door", "distractor": "pool the door" },
+  
+    { "correct": "a black pen", "distractor": "a black pan" },
+    { "correct": "bad weather", "distractor": "bed weather" },
+    { "correct": "that man is tall", "distractor": "that men are tall" },
+    { "correct": "pack your bag", "distractor": "peck your bag" },
+    { "correct": "sit on the mat", "distractor": "sit on the met" },
+  
+    { "correct": "cap on the desk", "distractor": "cup on the desk" },
+    { "correct": "a bat in the box", "distractor": "a but in the box" },
+    { "correct": "back to class", "distractor": "buck to class" },
+    { "correct": "pan of soup", "distractor": "pun of soup" },
+    { "correct": "bag of rice", "distractor": "bug of rice" },
+  
+    { "correct": "cut the rope", "distractor": "cot the rope" },
+    { "correct": "lucky day", "distractor": "locky day" },
+    { "correct": "a duck there", "distractor": "a dock there" },
+    { "correct": "the sun is up", "distractor": "the son is up" },
+    { "correct": "foot on the brake", "distractor": "food on the brake" },
+  
+    { "correct": "late for class", "distractor": "let for class" },
+    { "correct": "tail is short", "distractor": "tell is short" },
+    { "correct": "not today", "distractor": "note today" },
+    { "correct": "got a ticket", "distractor": "goat a ticket" },
+    { "correct": "hop over it", "distractor": "hope over it" },
+  
+    { "correct": "he called me", "distractor": "he caught me" },
+    { "correct": "the road is busy", "distractor": "the load is busy" },
+    { "correct": "right side", "distractor": "light side" },
+    { "correct": "thin book", "distractor": "tin book" },
+    { "correct": "seat is taken", "distractor": "sheet is taken" }
   ]
 }
