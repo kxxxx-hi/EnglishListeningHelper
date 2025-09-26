@@ -18,16 +18,17 @@ else:
 
 # Keep keys predictable for JS
 payload = {
-    "flashcardList": data.get("flashcardList", [
-        "eloquent","gregarious","resilience","ubiquitous","ephemeral",
-        "serendipity","magnanimous","perspicacious","conundrum","juxtaposition"
-    ]),
-    "antonymData": data.get("antonymData", []),
-    "pronunciationData": data.get("pronunciationData", []),
-    "minimalPairsData": data.get("minimalPairsData", []),
-    "vocabData": data.get("vocabData", [])  # optional block with {correct,distractors,translation}
+    "flashcardList": (
+        data.get("flashcardList")
+        or data.get("flashcards")
+        or ["eloquent","gregarious","resilience","ubiquitous","ephemeral",
+            "serendipity","magnanimous","perspicacious","conundrum","juxtaposition"]
+    ),
+    "antonymData": data.get("antonymData") or data.get("antonym") or [],
+    "pronunciationData": data.get("pronunciationData") or data.get("pronunciation") or [],
+    "minimalPairsData": data.get("minimalPairsData") or data.get("minimalPairs") or [],
+    "vocabData": data.get("vocabData") or [],
 }
-
 # ------- Raw HTML with a placeholder token we replace -------
 html_template = r'''
 <!DOCTYPE html>
