@@ -337,6 +337,128 @@
     { "correct": "the road is busy", "distractor": "the load is busy" },
     { "correct": "right side", "distractor": "light side" },
     { "correct": "thin book", "distractor": "tin book" },
-    { "correct": "seat is taken", "distractor": "sheet is taken" }
+    { "correct": "seat is taken", "distractor": "sheet is taken" },
+    {
+    "correct": "After the quarterly review, the principal reason we delayed the launch was the severe weather, not whether the budget was approved.",
+    "distractor": "After the quarterly review, the principle reason we delayed the launch was the severe whether, not weather the budget was approved."
+    },
+    {
+    "correct": "When the storm cleared, the hikers crossed the desert to reach the outpost, where they ate dessert before resting.",
+    "distractor": "When the storm cleared, the hikers crossed the dessert to reach the outpost, where they ate desert before resting."
+    },
+    {
+    "correct": "She offered candid advice to the interns and promised to advise them again if their questions weren’t answered.",
+    "distractor": "She offered candid advise to the interns and promised to advice them again if there questions weren’t answered."
+    },
+    {
+    "correct": "The mechanic said the brake would break under stress, and we should wait to see whether replacement parts arrive.",
+    "distractor": "The mechanic said the break would brake under stress, and we should weight to sea weather replacement parts arrive."
+    },
+    {
+    "correct": "He vowed not to lose momentum or loosen standards, even though the deadline was tighter than expected.",
+    "distractor": "He vowed not to loose momentum or losen standards, even though the deadline was titer than expected."
+    },
+    {
+    "correct": "Their team presented a course outline for beginners using coarse sand to demonstrate friction on the track.",
+    "distractor": "There team presented a coarse outline for beginners using course sand to demonstrate friction on the track."
+    },
+    {
+    "correct": "The designer chose muted tones to complement the artwork, then sent a kind compliment to the curator.",
+    "distractor": "The designer chose muted tones to compliment the artwork, then sent a kind complement to the curator."
+    },
+    {
+    "correct": "We toured the capitol at noon and met a capital investor whose insight changed our fundraising strategy.",
+    "distractor": "We toured the capital at noon and met a capitol investor whose incite changed our fundraising strategy."
+    },
+    {
+    "correct": "From the ridge, the campsite offered a clear sight of the river, and the site was sheltered from the wind.",
+    "distractor": "From the ridge, the campsite offered a clear site of the river, and the sight was sheltered from the wind."
+    },
+    {
+    "correct": "Because the aisle was crowded, she stayed by the window while her brother explored the quiet isle near the docks.",
+    "distractor": "Because the isle was crowded, she stayed by the window while her brother explored the quiet aisle near the docks."
+    },
+    {
+    "correct": "He read the policy aloud so everyone was allowed to hear the updates before voting.",
+    "distractor": "He read the policy allowed so everyone was aloud to hear the updates before voting."
+    },
+    {
+    "correct": "To celebrate the harvest, the baker sifted the flour into a flower-shaped mold and sprinkled sugar on top.",
+    "distractor": "To celebrate the harvest, the baker sifted the flower into a flour-shaped mold and sprinkled sugar on top."
+    },
+    {
+    "correct": "The new process had a positive effect on output and did not affect the error rate as we had feared.",
+    "distractor": "The new process had a positive affect on output and did not effect the error rate as we had feared."
+    },
+    {
+    "correct": "We tried to write the report in the right format, then saved two copies so no one wrote over the final draft.",
+    "distractor": "We tried to right the report in the write format, then saved too copies so no one right over the final draft."
+    },
+    {
+    "correct": "The safety inspector played a vital role during the drill and reminded us to tuck in any loose roll of cable.",
+    "distractor": "The safety inspector played a vital roll during the drill and reminded us to tuck in any loose role of cable."
+    },
+    {
+    "correct": "The ranger said the bridge could bear the load only if the beams remained bare of rust and debris.",
+    "distractor": "The ranger said the bridge could bare the load only if the beams remained bear of rust and debris."
+    },
+    {
+    "correct": "On the train, she queued a crime serial while eating a bowl of nutty cereal to pass the time.",
+    "distractor": "On the train, she queued a crime cereal while eating a bowl of nutty serial to pass the time."
+    },
+    {
+    "correct": "Because the sculpture was stationary during the gala, the curator locked the expensive stationery in a safe.",
+    "distractor": "Because the sculpture was stationery during the gala, the curator locked the expensive stationary in a safe."
+    },
+    {
+    "correct": "The director said the scene we had seen yesterday felt flat until the lighting team adjusted the angles.",
+    "distractor": "The director said the seen we had scene yesterday felt flat until the lighting team adjusted the angles."
+    },
+    {
+    "correct": "By morning the town felt relief, though the community continued its mourning for the library that burned down.",
+    "distractor": "By mourning the town felt relief, though the community continued its morning for the library that burned down."
+    },
+    {
+    "correct": "They agreed to stake the tent on higher ground and grill a steak once the fire settled into hot coals.",
+    "distractor": "They agreed to steak the tent on higher ground and grill a stake once the fire settled into hot coals."
+    },
+    {
+    "correct": "From the plane window, the valley looked like a vast plain stitched with orchards and winding roads.",
+    "distractor": "From the plain window, the valley looked like a vast plane stitched with orchards and winding roads."
+    },
+    {
+    "correct": "The biologist watched the hawk prey over the field while a farmer nearby began to pray for rain.",
+    "distractor": "The biologist watched the hawk pray over the field while a farmer nearby began to prey for rain."
+    },
+    {
+    "correct": "We arrived later than expected, then learned the gallery would open earlier than usual for members.",
+    "distractor": "We arrived later then expected, than learned the gallery would open earlier then usual for members."
+    },
+    {
+    "correct": "He tied a tight knot in the rope, not realizing the guide had already secured the line.",
+    "distractor": "He tied a tight not in the rope, knot realizing the guide had already secured the line."
+    },
+    {
+    "correct": "Please weigh the ingredients, then find your way to station two, where two mentors will assist if needed.",
+    "distractor": "Please way the ingredients, then find your weigh to station too, where to mentors will assist if needed."
+    },
+    {
+    "correct": "Kindly mail the signed forms to the office, since the male courier will arrive after five.",
+    "distractor": "Kindly male the signed forms to the office, since the mail courier will arrive after five."
+    },
+    {
+    "correct": "The principal investigator questioned whether the sample size was adequate and if the weather skewed the readings.",
+    "distractor": "The principle investigator questioned weather the sample size was adequate and if the whether skewed the readings."
+    },
+    {
+    "correct": "At the retreat, they practiced quiet meditation to center their minds and then sent sincere letters to their mentors.",
+    "distractor": "At the retreat, they practiced quite meditation to center there minds and then sent sincere letters to there mentors."
+    },
+    {
+    "correct": "She booked a suite with a sea view to see the sunrise, then chose a subtle palette to suit the room.",
+    "distractor": "She booked a suit with a see view to sea the sunrise, then chose a settle palette to suite the room."
+    }
+
+
   ]
 }
