@@ -1,4 +1,3 @@
-```python
 # app.py
 import json
 from pathlib import Path
@@ -522,4 +521,4 @@ html_content = html_template.replace(
 )
 
 components.html(html_content, height=900, scrolling=True)
-```
+
