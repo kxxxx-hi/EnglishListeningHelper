@@ -16,7 +16,7 @@ if DATA_PATH.exists():
 else:
     data = {}
 
-# Keep keys predictable for JS
+# Keep keys predictable for JS. Tongue twisters must come from data.json.
 payload = {
     "flashcardList": (
         data.get("flashcardList")
@@ -28,7 +28,15 @@ payload = {
     "pronunciationData": data.get("pronunciationData") or data.get("pronunciation") or [],
     "minimalPairsData": data.get("minimalPairsData") or data.get("minimalPairs") or [],
     "vocabData": data.get("vocabData") or [],
+    # Expect one of these keys in data.json:
+    "tongueTwisterData": (
+        data.get("tongueTwisterData")
+        or data.get("tongueTwisters")
+        or data.get("tongue_twisters")
+        or []
+    ),
 }
+
 # ------- Raw HTML with a placeholder token we replace -------
 html_template = r'''
 <!DOCTYPE html>
@@ -47,6 +55,10 @@ html_template = r'''
   .btn-choice:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1); }
   .correct { background-color:#10b981 !important; color:#fff !important; border-color:#059669 !important; }
   .incorrect { background-color:#ef4444 !important; color:#fff !important; border-color:#dc2626 !important; }
+  .ph-blue { color:#2563eb; font-weight:600; }
+  .ph-red { color:#dc2626; font-weight:600; }
+  .ph-yellow { color:#b45309; font-weight:600; }
+  .tw-sentence { font-size:1.2rem; line-height:1.75rem; text-align:center; }
 </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
@@ -59,11 +71,12 @@ html_template = r'''
 
   <!-- Tabs -->
   <div class="border-b border-gray-200 mb-6">
-    <nav class="-mb-px flex space-x-4" aria-label="Tabs">
-      <button id="tab-flashcards" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Flashcards</button>
-      <button id="tab-antonym" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Antonym Game</button>
-      <button id="tab-pronunciation" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Pronunciation Game</button>
-      <button id="tab-minimalpairs" class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Which one are you hearing?</button>
+    <nav class="-mb-px flex flex-wrap gap-2" aria-label="Tabs">
+      <button id="tab-flashcards" class="whitespace-nowrap py-3 px-2 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Flashcards</button>
+      <button id="tab-antonym" class="whitespace-nowrap py-3 px-2 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Antonym Game</button>
+      <button id="tab-pronunciation" class="whitespace-nowrap py-3 px-2 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Pronunciation Game</button>
+      <button id="tab-minimalpairs" class="whitespace-nowrap py-3 px-2 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Which one are you hearing?</button>
+      <button id="tab-tonguetwister" class="whitespace-nowrap py-3 px-2 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300">Tongue Twister</button>
     </nav>
   </div>
 
@@ -135,6 +148,37 @@ html_template = r'''
       </div>
       <div id="minimalpairs-feedback" class="h-6 text-center font-medium"></div>
     </div>
+
+    <!-- Tongue Twister (flashcards) -->
+    <div id="view-tonguetwister" class="hidden space-y-6">
+      <div class="bg-gray-50 rounded-lg p-6 shadow-inner">
+        <div class="flex flex-col items-center gap-2 mb-3">
+          <div id="tw-group" class="text-sm font-semibold text-indigo-700"></div>
+          <div id="tw-phonemes" class="text-sm"></div>
+        </div>
+        <div class="card px-4 py-6">
+          <p id="tw-sentence" class="tw-sentence"></p>
+          <div class="mt-6 flex gap-3">
+            <button id="tw-play-normal" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+              ▶ Play
+            </button>
+            <button id="tw-play-slow" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-50">
+              ▶ Slow
+            </button>
+          </div>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+          <button id="tw-prev" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <span id="tw-counter" class="text-sm font-medium text-gray-600">1 / 1</span>
+          <button id="tw-next" class="p-3 rounded-full bg-gray-200 hover:bg-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -152,6 +196,22 @@ html_template = r'''
     const antonymData = Array.isArray(window.APP_DATA.antonymData) ? window.APP_DATA.antonymData : [];
     const pronunciationData = Array.isArray(window.APP_DATA.pronunciationData) ? window.APP_DATA.pronunciationData : [];
     const minimalPairsData = Array.isArray(window.APP_DATA.minimalPairsData) ? window.APP_DATA.minimalPairsData : [];
+    const tongueTwisterData = Array.isArray(window.APP_DATA.tongueTwisterData) ? window.APP_DATA.tongueTwisterData : [];
+
+    // Flatten tongue twisters into a deck [{group, phonemes, sentence}]
+    const twDeck = [];
+    tongueTwisterData.forEach(g => {
+      (g.sentences || []).forEach(s => {
+        // Optional inline markup support: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
+        // If present, convert to colored spans. Otherwise render plain text.
+        const html = ('' + s)
+          .replace(/\[\[1\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-blue">$1</span>')
+          .replace(/\[\[2\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-red">$1</span>')
+          .replace(/\[\[3\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-yellow">$1</span>');
+        twDeck.push({ group: g.group, phonemes: g.phonemes || [], sentence: s, html });
+      });
+    });
+    let twIndex = 0;
 
     // --- DOM ELEMENTS ---
     const views = {
@@ -159,12 +219,14 @@ html_template = r'''
       antonym: document.getElementById('view-antonym'),
       pronunciation: document.getElementById('view-pronunciation'),
       minimalpairs: document.getElementById('view-minimalpairs'),
+      tonguetwister: document.getElementById('view-tonguetwister'),
     };
     const tabs = {
       flashcards: document.getElementById('tab-flashcards'),
       antonym: document.getElementById('tab-antonym'),
       pronunciation: document.getElementById('tab-pronunciation'),
       minimalpairs: document.getElementById('tab-minimalpairs'),
+      tonguetwister: document.getElementById('tab-tonguetwister'),
     };
 
     // Flashcard Elements
@@ -195,13 +257,23 @@ html_template = r'''
     const minimalPairsFeedback = document.getElementById('minimalpairs-feedback');
     let currentMinimalPairsQuestion = {};
 
+    // Tongue Twister
+    const twGroupEl = document.getElementById('tw-group');
+    const twPhonemesEl = document.getElementById('tw-phonemes');
+    const twSentenceEl = document.getElementById('tw-sentence');
+    const twPrevBtn = document.getElementById('tw-prev');
+    const twNextBtn = document.getElementById('tw-next');
+    const twCounter = document.getElementById('tw-counter');
+    const twPlayNormal = document.getElementById('tw-play-normal');
+    const twPlaySlow = document.getElementById('tw-play-slow');
+
     // --- Utils ---
-    const speak = (text) => {
+    const speak = (text, rate=0.9) => {
       if (!text) return;
       if (synth.speaking) synth.cancel();
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'en-US';
-      u.rate = 0.9;
+      u.rate = rate;
       synth.speak(u);
     };
     const shuffleArray = (array) => {
@@ -211,8 +283,12 @@ html_template = r'''
       }
       return array;
     };
+    const colorSpan = (txt, cls) => `<span class="${cls}">${txt}</span>`;
+    const renderPhonemeLegend = (phonemes) => {
+      const classes = ['ph-blue','ph-red','ph-yellow'];
+      return phonemes.slice(0,3).map((p, i) => colorSpan(p, classes[i])).join('  ');
+    };
     const switchMode = (mode) => {
-      currentMode = mode;
       Object.values(views).forEach(v => v.classList.add('hidden'));
       Object.values(tabs).forEach(t => t.classList.remove('tab-active'));
       views[mode].classList.remove('hidden');
@@ -220,6 +296,7 @@ html_template = r'''
       if (mode === 'antonym') setupAntonymGame();
       if (mode === 'pronunciation') setupPronunciationGame();
       if (mode === 'minimalpairs') setupMinimalPairsGame();
+      if (mode === 'tonguetwister') updateTwView();
     };
 
     // --- Flashcards ---
@@ -283,7 +360,8 @@ html_template = r'''
       }
       pronunciationFeedback.textContent = '';
       currentPronunciationQuestion = pronunciationData[Math.floor(Math.random() * pronunciationData.length)];
-      const choices = shuffleArray([currentPronunciationQuestion.correct, ...(currentPronunciationQuestion.distractors || []).slice(0,3)]);
+      const allChoices = [currentPronunciationQuestion.correct, ...(currentPronunciationQuestion.distractors || [])];
+      const choices = shuffleArray(allChoices).slice(0,4);
       pronunciationChoicesContainer.innerHTML = '';
       choices.forEach(choice => {
         const b = document.createElement('button');
@@ -320,7 +398,8 @@ html_template = r'''
       minimalPairsFeedback.textContent = '';
       const q = minimalPairsData[Math.floor(Math.random() * minimalPairsData.length)];
       const target = Math.random() < 0.5 ? q.correct : q.distractor;
-      currentMinimalPairsQuestion = { ...q, target };
+      const currentMinimalPairsQuestion = { ...q, target };
+      window.__MPQ = currentMinimalPairsQuestion; // store globally for play button
       const choices = shuffleArray([q.correct, q.distractor]);
       minimalPairsChoicesContainer.innerHTML = '';
       choices.forEach(choice => {
@@ -332,13 +411,14 @@ html_template = r'''
       });
     };
     const checkMinimalPairsAnswer = (selected) => {
+      const q = window.__MPQ || {};
       const buttons = minimalPairsChoicesContainer.querySelectorAll('button');
       buttons.forEach(btn => {
         btn.disabled = true;
-        if (btn.textContent === currentMinimalPairsQuestion.target) btn.classList.add('correct');
+        if (btn.textContent === q.target) btn.classList.add('correct');
         else if (btn.textContent === selected) btn.classList.add('incorrect');
       });
-      if (selected === currentMinimalPairsQuestion.target) {
+      if (selected === q.target) {
         minimalPairsFeedback.textContent = 'Correct!';
         minimalPairsFeedback.className = 'h-6 text-center font-medium text-green-600';
       } else {
@@ -348,17 +428,101 @@ html_template = r'''
       setTimeout(setupMinimalPairsGame, 1600);
     };
 
+    // --- Tongue Twister (flashcards) ---
+    const twGroupEl = document.getElementById('tw-group');
+    const twPhonemesEl = document.getElementById('tw-phonemes');
+    const twSentenceEl = document.getElementById('tw-sentence');
+    const twPrevBtn = document.getElementById('tw-prev');
+    const twNextBtn = document.getElementById('tw-next');
+    const twCounter = document.getElementById('tw-counter');
+    const twPlayNormal = document.getElementById('tw-play-normal');
+    const twPlaySlow = document.getElementById('tw-play-slow');
+
+    const renderPhonemeCard = (item) => {
+      twGroupEl.textContent = item.group || '';
+      twPhonemesEl.innerHTML = renderPhonemeLegend(item.phonemes || []);
+      // If sentence had inline [[1]]..[[/]] markers, render HTML; else plain text.
+      if (item.html && item.html !== item.sentence) {
+        twSentenceEl.innerHTML = item.html;
+      } else {
+        twSentenceEl.textContent = item.sentence || '';
+      }
+    };
+    const updateTwView = () => {
+      if (!twDeck.length) {
+        twGroupEl.textContent = '';
+        twPhonemesEl.innerHTML = '<span class="text-gray-500">No tongue twisters.</span>';
+        twSentenceEl.textContent = '';
+        twCounter.textContent = '0 / 0';
+        return;
+      }
+      const item = twDeck[twIndex];
+      renderPhonemeCard(item);
+      twCounter.textContent = `${twIndex + 1} / ${twDeck.length}`;
+    };
+
     // --- Events ---
     Object.keys(tabs).forEach(key => tabs[key].addEventListener('click', () => switchMode(key)));
 
-    playAudioBtn.addEventListener('click', () => speak(correctList[currentcorrectIndex]));
+    playAudioBtn.addEventListener('click', () => speak(correctList[currentcorrectIndex], 0.9));
     revealcorrectBtn.addEventListener('click', () => { document.getElementById('flashcard-instruction').classList.add('hidden'); correctText.classList.remove('invisible'); });
     nextcorrectBtn.addEventListener('click', () => { currentcorrectIndex = (currentcorrectIndex + 1) % (correctList.length || 1); updateFlashcardView(); });
     prevcorrectBtn.addEventListener('click', () => { currentcorrectIndex = (currentcorrectIndex - 1 + (correctList.length || 1)) % (correctList.length || 1); updateFlashcardView(); });
     saveListBtn.addEventListener('click', savecorrectList);
 
-    playPronunciationAudioBtn.addEventListener('click', () => speak(currentPronunciationQuestion.correct));
-    playMinimalPairsAudioBtn.addEventListener('click', () => speak(currentMinimalPairsQuestion.target));
+    playPronunciationAudioBtn.addEventListener('click', () => {
+      const q = window.__PRONQ || {};
+      const phrase = (q.correct) ? q.correct : (pronunciationData.length ? pronunciationData[0].correct : '');
+      speak(phrase, 0.9);
+    });
+
+    // store current pron q for play button
+    const _oldSetupPron = setupPronunciationGame;
+    setupPronunciationGame = () => {
+      if (!pronunciationData.length) { _oldSetupPron(); return; }
+      const idx = Math.floor(Math.random() * pronunciationData.length);
+      window.__PRONQ = pronunciationData[idx];
+      // rebuild UI using stored q
+      const q = window.__PRONQ;
+      pronunciationFeedback.textContent = '';
+      const allChoices = [q.correct, ...(q.distractors || [])];
+      const choices = shuffleArray(allChoices).slice(0,4);
+      pronunciationChoicesContainer.innerHTML = '';
+      choices.forEach(choice => {
+        const b = document.createElement('button');
+        b.textContent = choice;
+        b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
+        b.onclick = () => {
+          const buttons = pronunciationChoicesContainer.querySelectorAll('button');
+          buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === q.correct) btn.classList.add('correct');
+            else if (btn.textContent === choice) btn.classList.add('incorrect');
+          });
+          if (choice === q.correct) {
+            pronunciationFeedback.textContent = 'Correct!';
+            pronunciationFeedback.className = 'h-6 text-center font-medium text-green-600';
+          } else {
+            pronunciationFeedback.textContent = 'Not quite. Try the next one!';
+            pronunciationFeedback.className = 'h-6 text-center font-medium text-red-600';
+          }
+          setTimeout(setupPronunciationGame, 1600);
+        };
+        pronunciationChoicesContainer.appendChild(b);
+      });
+    };
+
+    playMinimalPairsAudioBtn.addEventListener('click', () => {
+      const q = window.__MPQ || {};
+      const phrase = q.target || (minimalPairsData.length ? minimalPairsData[0].correct : '');
+      speak(phrase, 0.9);
+    });
+
+    // Tongue Twister buttons
+    twPrevBtn.addEventListener('click', () => { if (!twDeck.length) return; twIndex = (twIndex - 1 + twDeck.length) % twDeck.length; updateTwView(); });
+    twNextBtn.addEventListener('click', () => { if (!twDeck.length) return; twIndex = (twIndex + 1) % twDeck.length; updateTwView(); });
+    twPlayNormal.addEventListener('click', () => { if (!twDeck.length) return; speak(twDeck[twIndex].sentence, 1.0); });
+    twPlaySlow.addEventListener('click', () => { if (!twDeck.length) return; speak(twDeck[twIndex].sentence, 0.7); });
 
     // --- Init ---
     document.getElementById('correct-list').value = correctList.join(', ');
