@@ -16,7 +16,7 @@ if DATA_PATH.exists():
 else:
     data = {}
 
-# Keep keys predictable for JS. Tongue twisters must come from data.json.
+# ------- Build payload strictly from data.json keys (with fallbacks) -------
 payload = {
     "flashcardList": (
         data.get("flashcardList")
@@ -28,7 +28,7 @@ payload = {
     "pronunciationData": data.get("pronunciationData") or data.get("pronunciation") or [],
     "minimalPairsData": data.get("minimalPairsData") or data.get("minimalPairs") or [],
     "vocabData": data.get("vocabData") or [],
-    # Expect one of these keys in data.json:
+    # expect one of these in data.json for tongue twisters
     "tongueTwisterData": (
         data.get("tongueTwisterData")
         or data.get("tongueTwisters")
@@ -37,7 +37,7 @@ payload = {
     ),
 }
 
-# ------- Raw HTML with a placeholder token we replace -------
+# ------- HTML (JS app) -------
 html_template = r'''
 <!DOCTYPE html>
 <html lang="en">
@@ -185,25 +185,25 @@ html_template = r'''
 <script>
   // Data injected by Python
   window.APP_DATA = __DATA_JSON__;
+  const safeArray = (v) => Array.isArray(v) ? v : [];
 
   document.addEventListener('DOMContentLoaded', () => {
     // --- STATE ---
     let currentMode = 'flashcards';
-    let correctList = Array.isArray(window.APP_DATA.flashcardList) ? window.APP_DATA.flashcardList.slice(0) : [];
+    let correctList = safeArray(window.APP_DATA.flashcardList).slice(0);
     let currentcorrectIndex = 0;
     const synth = window.speechSynthesis;
 
-    const antonymData = Array.isArray(window.APP_DATA.antonymData) ? window.APP_DATA.antonymData : [];
-    const pronunciationData = Array.isArray(window.APP_DATA.pronunciationData) ? window.APP_DATA.pronunciationData : [];
-    const minimalPairsData = Array.isArray(window.APP_DATA.minimalPairsData) ? window.APP_DATA.minimalPairsData : [];
-    const tongueTwisterData = Array.isArray(window.APP_DATA.tongueTwisterData) ? window.APP_DATA.tongueTwisterData : [];
+    const antonymData = safeArray(window.APP_DATA.antonymData);
+    const pronunciationData = safeArray(window.APP_DATA.pronunciationData);
+    const minimalPairsData = safeArray(window.APP_DATA.minimalPairsData);
+    const tongueTwisterData = safeArray(window.APP_DATA.tongueTwisterData);
 
-    // Flatten tongue twisters into a deck [{group, phonemes, sentence}]
+    // Flatten tongue twisters into a deck [{group, phonemes, sentence, html}]
     const twDeck = [];
     tongueTwisterData.forEach(g => {
       (g.sentences || []).forEach(s => {
-        // Optional inline markup support: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
-        // If present, convert to colored spans. Otherwise render plain text.
+        // Optional coloring markup: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
         const html = ('' + s)
           .replace(/\[\[1\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-blue">$1</span>')
           .replace(/\[\[2\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-red">$1</span>')
@@ -243,19 +243,19 @@ html_template = r'''
     // Antonym
     const antonymChoicesContainer = document.getElementById('antonym-choices');
     const antonymFeedback = document.getElementById('antonym-feedback');
-    let currentAntonymQuestion = {};
+    let currentAntonymQuestion = null;
 
     // Pronunciation
     const playPronunciationAudioBtn = document.getElementById('play-pronunciation-audio-btn');
     const pronunciationChoicesContainer = document.getElementById('pronunciation-choices');
     const pronunciationFeedback = document.getElementById('pronunciation-feedback');
-    let currentPronunciationQuestion = {};
+    let currentPronunciationQuestion = null;
 
     // Minimal Pairs
     const playMinimalPairsAudioBtn = document.getElementById('play-minimalpairs-audio-btn');
     const minimalPairsChoicesContainer = document.getElementById('minimalpairs-choices');
     const minimalPairsFeedback = document.getElementById('minimalpairs-feedback');
-    let currentMinimalPairsQuestion = {};
+    let currentMinimalPairsQuestion = null;
 
     // Tongue Twister
     const twGroupEl = document.getElementById('tw-group');
@@ -307,7 +307,8 @@ html_template = r'''
       correctCounter.textContent = `${correctList.length ? currentcorrectIndex + 1 : 0} / ${correctList.length}`;
     };
     const savecorrectList = () => {
-      const words = correctListInput.value.split(',').map(s => s.trim()).filter(Boolean);
+      const words = (correctListInput.value || '')
+        .split(',').map(s => s.trim()).filter(Boolean);
       if (words.length) {
         correctList = words;
         currentcorrectIndex = 0;
@@ -330,25 +331,24 @@ html_template = r'''
         const b = document.createElement('button');
         b.textContent = choice;
         b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
-        b.onclick = () => checkAntonymAnswer(choice);
+        b.onclick = () => {
+          const buttons = antonymChoicesContainer.querySelectorAll('button');
+          buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === currentAntonymQuestion.a) btn.classList.add('correct');
+            else if (btn.textContent === choice) btn.classList.add('incorrect');
+          });
+          if (choice === currentAntonymQuestion.a) {
+            antonymFeedback.textContent = 'Correct!';
+            antonymFeedback.className = 'h-6 text-center font-medium text-green-600';
+          } else {
+            antonymFeedback.textContent = 'Not quite. Try the next one!';
+            antonymFeedback.className = 'h-6 text-center font-medium text-red-600';
+          }
+          setTimeout(setupAntonymGame, 1600);
+        };
         antonymChoicesContainer.appendChild(b);
       });
-    };
-    const checkAntonymAnswer = (selected) => {
-      const buttons = antonymChoicesContainer.querySelectorAll('button');
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === currentAntonymQuestion.a) btn.classList.add('correct');
-        else if (btn.textContent === selected) btn.classList.add('incorrect');
-      });
-      if (selected === currentAntonymQuestion.a) {
-        antonymFeedback.textContent = 'Correct!';
-        antonymFeedback.className = 'h-6 text-center font-medium text-green-600';
-      } else {
-        antonymFeedback.textContent = 'Not quite. Try the next one!';
-        antonymFeedback.className = 'h-6 text-center font-medium text-red-600';
-      }
-      setTimeout(setupAntonymGame, 1600);
     };
 
     // --- Pronunciation Game (4 options) ---
@@ -356,6 +356,7 @@ html_template = r'''
       if (!pronunciationData.length) {
         pronunciationChoicesContainer.innerHTML = '<p class="text-gray-500">No pronunciation data.</p>';
         pronunciationFeedback.textContent = '';
+        currentPronunciationQuestion = null;
         return;
       }
       pronunciationFeedback.textContent = '';
@@ -367,139 +368,14 @@ html_template = r'''
         const b = document.createElement('button');
         b.textContent = choice;
         b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
-        b.onclick = () => checkPronunciationAnswer(choice);
-        pronunciationChoicesContainer.appendChild(b);
-      });
-    };
-    const checkPronunciationAnswer = (selected) => {
-      const buttons = pronunciationChoicesContainer.querySelectorAll('button');
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === currentPronunciationQuestion.correct) btn.classList.add('correct');
-        else if (btn.textContent === selected) btn.classList.add('incorrect');
-      });
-      if (selected === currentPronunciationQuestion.correct) {
-        pronunciationFeedback.textContent = 'Correct!';
-        pronunciationFeedback.className = 'h-6 text-center font-medium text-green-600';
-      } else {
-        pronunciationFeedback.textContent = 'Not quite. Try the next one!';
-        pronunciationFeedback.className = 'h-6 text-center font-medium text-red-600';
-      }
-      setTimeout(setupPronunciationGame, 1600);
-    };
-
-    // --- Minimal Pairs (2 options) ---
-    const setupMinimalPairsGame = () => {
-      if (!minimalPairsData.length) {
-        minimalPairsChoicesContainer.innerHTML = '<p class="text-gray-500">No minimal-pairs data.</p>';
-        minimalPairsFeedback.textContent = '';
-        return;
-      }
-      minimalPairsFeedback.textContent = '';
-      const q = minimalPairsData[Math.floor(Math.random() * minimalPairsData.length)];
-      const target = Math.random() < 0.5 ? q.correct : q.distractor;
-      const currentMinimalPairsQuestion = { ...q, target };
-      window.__MPQ = currentMinimalPairsQuestion; // store globally for play button
-      const choices = shuffleArray([q.correct, q.distractor]);
-      minimalPairsChoicesContainer.innerHTML = '';
-      choices.forEach(choice => {
-        const b = document.createElement('button');
-        b.textContent = choice;
-        b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
-        b.onclick = () => checkMinimalPairsAnswer(choice);
-        minimalPairsChoicesContainer.appendChild(b);
-      });
-    };
-    const checkMinimalPairsAnswer = (selected) => {
-      const q = window.__MPQ || {};
-      const buttons = minimalPairsChoicesContainer.querySelectorAll('button');
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === q.target) btn.classList.add('correct');
-        else if (btn.textContent === selected) btn.classList.add('incorrect');
-      });
-      if (selected === q.target) {
-        minimalPairsFeedback.textContent = 'Correct!';
-        minimalPairsFeedback.className = 'h-6 text-center font-medium text-green-600';
-      } else {
-        minimalPairsFeedback.textContent = 'Not quite. Try the next one!';
-        minimalPairsFeedback.className = 'h-6 text-center font-medium text-red-600';
-      }
-      setTimeout(setupMinimalPairsGame, 1600);
-    };
-
-    // --- Tongue Twister (flashcards) ---
-    const twGroupEl = document.getElementById('tw-group');
-    const twPhonemesEl = document.getElementById('tw-phonemes');
-    const twSentenceEl = document.getElementById('tw-sentence');
-    const twPrevBtn = document.getElementById('tw-prev');
-    const twNextBtn = document.getElementById('tw-next');
-    const twCounter = document.getElementById('tw-counter');
-    const twPlayNormal = document.getElementById('tw-play-normal');
-    const twPlaySlow = document.getElementById('tw-play-slow');
-
-    const renderPhonemeCard = (item) => {
-      twGroupEl.textContent = item.group || '';
-      twPhonemesEl.innerHTML = renderPhonemeLegend(item.phonemes || []);
-      // If sentence had inline [[1]]..[[/]] markers, render HTML; else plain text.
-      if (item.html && item.html !== item.sentence) {
-        twSentenceEl.innerHTML = item.html;
-      } else {
-        twSentenceEl.textContent = item.sentence || '';
-      }
-    };
-    const updateTwView = () => {
-      if (!twDeck.length) {
-        twGroupEl.textContent = '';
-        twPhonemesEl.innerHTML = '<span class="text-gray-500">No tongue twisters.</span>';
-        twSentenceEl.textContent = '';
-        twCounter.textContent = '0 / 0';
-        return;
-      }
-      const item = twDeck[twIndex];
-      renderPhonemeCard(item);
-      twCounter.textContent = `${twIndex + 1} / ${twDeck.length}`;
-    };
-
-    // --- Events ---
-    Object.keys(tabs).forEach(key => tabs[key].addEventListener('click', () => switchMode(key)));
-
-    playAudioBtn.addEventListener('click', () => speak(correctList[currentcorrectIndex], 0.9));
-    revealcorrectBtn.addEventListener('click', () => { document.getElementById('flashcard-instruction').classList.add('hidden'); correctText.classList.remove('invisible'); });
-    nextcorrectBtn.addEventListener('click', () => { currentcorrectIndex = (currentcorrectIndex + 1) % (correctList.length || 1); updateFlashcardView(); });
-    prevcorrectBtn.addEventListener('click', () => { currentcorrectIndex = (currentcorrectIndex - 1 + (correctList.length || 1)) % (correctList.length || 1); updateFlashcardView(); });
-    saveListBtn.addEventListener('click', savecorrectList);
-
-    playPronunciationAudioBtn.addEventListener('click', () => {
-      const q = window.__PRONQ || {};
-      const phrase = (q.correct) ? q.correct : (pronunciationData.length ? pronunciationData[0].correct : '');
-      speak(phrase, 0.9);
-    });
-
-    // store current pron q for play button
-    const _oldSetupPron = setupPronunciationGame;
-    setupPronunciationGame = () => {
-      if (!pronunciationData.length) { _oldSetupPron(); return; }
-      const idx = Math.floor(Math.random() * pronunciationData.length);
-      window.__PRONQ = pronunciationData[idx];
-      // rebuild UI using stored q
-      const q = window.__PRONQ;
-      pronunciationFeedback.textContent = '';
-      const allChoices = [q.correct, ...(q.distractors || [])];
-      const choices = shuffleArray(allChoices).slice(0,4);
-      pronunciationChoicesContainer.innerHTML = '';
-      choices.forEach(choice => {
-        const b = document.createElement('button');
-        b.textContent = choice;
-        b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
         b.onclick = () => {
           const buttons = pronunciationChoicesContainer.querySelectorAll('button');
           buttons.forEach(btn => {
             btn.disabled = true;
-            if (btn.textContent === q.correct) btn.classList.add('correct');
+            if (btn.textContent === currentPronunciationQuestion.correct) btn.classList.add('correct');
             else if (btn.textContent === choice) btn.classList.add('incorrect');
           });
-          if (choice === q.correct) {
+          if (choice === currentPronunciationQuestion.correct) {
             pronunciationFeedback.textContent = 'Correct!';
             pronunciationFeedback.className = 'h-6 text-center font-medium text-green-600';
           } else {
@@ -512,17 +388,85 @@ html_template = r'''
       });
     };
 
-    playMinimalPairsAudioBtn.addEventListener('click', () => {
-      const q = window.__MPQ || {};
-      const phrase = q.target || (minimalPairsData.length ? minimalPairsData[0].correct : '');
+    playPronunciationAudioBtn.addEventListener('click', () => {
+      const phrase = currentPronunciationQuestion && currentPronunciationQuestion.correct
+        ? currentPronunciationQuestion.correct
+        : (pronunciationData[0] ? pronunciationData[0].correct : '');
       speak(phrase, 0.9);
     });
 
-    // Tongue Twister buttons
+    // --- Minimal Pairs (2 options) ---
+    const setupMinimalPairsGame = () => {
+      if (!minimalPairsData.length) {
+        minimalPairsChoicesContainer.innerHTML = '<p class="text-gray-500">No minimal-pairs data.</p>';
+        minimalPairsFeedback.textContent = '';
+        currentMinimalPairsQuestion = null;
+        return;
+      }
+      minimalPairsFeedback.textContent = '';
+      const q = minimalPairsData[Math.floor(Math.random() * minimalPairsData.length)];
+      const target = Math.random() < 0.5 ? q.correct : q.distractor;
+      currentMinimalPairsQuestion = { ...q, target };
+      const choices = shuffleArray([q.correct, q.distractor]);
+      minimalPairsChoicesContainer.innerHTML = '';
+      choices.forEach(choice => {
+        const b = document.createElement('button');
+        b.textContent = choice;
+        b.className = 'btn-choice w-full px-4 py-3 border border-gray-300 rounded-lg text-lg font-medium bg-white text-gray-700 hover:bg-gray-50';
+        b.onclick = () => {
+          const buttons = minimalPairsChoicesContainer.querySelectorAll('button');
+          buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent === currentMinimalPairsQuestion.target) btn.classList.add('correct');
+            else if (btn.textContent === choice) btn.classList.add('incorrect');
+          });
+          if (choice === currentMinimalPairsQuestion.target) {
+            minimalPairsFeedback.textContent = 'Correct!';
+            minimalPairsFeedback.className = 'h-6 text-center font-medium text-green-600';
+          } else {
+            minimalPairsFeedback.textContent = 'Not quite. Try the next one!';
+            minimalPairsFeedback.className = 'h-6 text-center font-medium text-red-600';
+          }
+          setTimeout(setupMinimalPairsGame, 1600);
+        };
+        minimalPairsChoicesContainer.appendChild(b);
+      });
+    };
+
+    playMinimalPairsAudioBtn.addEventListener('click', () => {
+      const phrase = currentMinimalPairsQuestion && currentMinimalPairsQuestion.target
+        ? currentMinimalPairsQuestion.target
+        : (minimalPairsData[0] ? minimalPairsData[0].correct : '');
+      speak(phrase, 0.9);
+    });
+
+    // --- Tongue Twister (flashcards) ---
+    const updateTwView = () => {
+      if (!twDeck.length) {
+        twGroupEl.textContent = '';
+        twPhonemesEl.innerHTML = '<span class="text-gray-500">No tongue twisters.</span>';
+        twSentenceEl.textContent = '';
+        twCounter.textContent = '0 / 0';
+        return;
+      }
+      const item = twDeck[twIndex];
+      twGroupEl.textContent = item.group || '';
+      twPhonemesEl.innerHTML = renderPhonemeLegend(item.phonemes || []);
+      if (item.html && item.html !== item.sentence) {
+        twSentenceEl.innerHTML = item.html;
+      } else {
+        twSentenceEl.textContent = item.sentence || '';
+      }
+      twCounter.textContent = `${twIndex + 1} / ${twDeck.length}`;
+    };
+
     twPrevBtn.addEventListener('click', () => { if (!twDeck.length) return; twIndex = (twIndex - 1 + twDeck.length) % twDeck.length; updateTwView(); });
     twNextBtn.addEventListener('click', () => { if (!twDeck.length) return; twIndex = (twIndex + 1) % twDeck.length; updateTwView(); });
     twPlayNormal.addEventListener('click', () => { if (!twDeck.length) return; speak(twDeck[twIndex].sentence, 1.0); });
     twPlaySlow.addEventListener('click', () => { if (!twDeck.length) return; speak(twDeck[twIndex].sentence, 0.7); });
+
+    // --- Tab wiring ---
+    Object.keys(tabs).forEach(key => tabs[key].addEventListener('click', () => switchMode(key)));
 
     // --- Init ---
     document.getElementById('correct-list').value = correctList.join(', ');
