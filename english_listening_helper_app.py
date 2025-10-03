@@ -1,3 +1,4 @@
+```python
 # app.py
 import json
 from pathlib import Path
@@ -28,7 +29,8 @@ payload = {
     "pronunciationData": data.get("pronunciationData") or data.get("pronunciation") or [],
     "minimalPairsData": data.get("minimalPairsData") or data.get("minimalPairs") or [],
     "vocabData": data.get("vocabData") or [],
-    # expect one of these in data.json for tongue twisters
+    # Tongue twisters must live in data.json. Optional: "patterns" per group to auto-highlight.
+    # patterns format: [ ["regex1","regex2"], ["regex3"], ["regex4"] ] for up to 3 phoneme groups.
     "tongueTwisterData": (
         data.get("tongueTwisterData")
         or data.get("tongueTwisters")
@@ -59,6 +61,7 @@ html_template = r'''
   .ph-red { color:#dc2626; font-weight:600; }
   .ph-yellow { color:#b45309; font-weight:600; }
   .tw-sentence { font-size:1.2rem; line-height:1.75rem; text-align:center; }
+  .ph-chip { padding:2px 6px; border-radius:8px; background:#eef2ff; margin:0 4px; }
 </style>
 </head>
 <body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen p-4">
@@ -199,16 +202,16 @@ html_template = r'''
     const minimalPairsData = safeArray(window.APP_DATA.minimalPairsData);
     const tongueTwisterData = safeArray(window.APP_DATA.tongueTwisterData);
 
-    // Flatten tongue twisters into a deck [{group, phonemes, sentence, html}]
+    // Build deck [{group, phonemes, patterns?, sentence, htmlMarked?}]
     const twDeck = [];
     tongueTwisterData.forEach(g => {
       (g.sentences || []).forEach(s => {
-        // Optional coloring markup: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
-        const html = ('' + s)
+        // Inline markup support first: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
+        const htmlMarked = ('' + s)
           .replace(/\[\[1\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-blue">$1</span>')
           .replace(/\[\[2\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-red">$1</span>')
           .replace(/\[\[3\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-yellow">$1</span>');
-        twDeck.push({ group: g.group, phonemes: g.phonemes || [], sentence: s, html });
+        twDeck.push({ group: g.group, phonemes: g.phonemes || [], patterns: g.patterns || null, sentence: s, htmlMarked });
       });
     });
     let twIndex = 0;
@@ -286,8 +289,47 @@ html_template = r'''
     const colorSpan = (txt, cls) => `<span class="${cls}">${txt}</span>`;
     const renderPhonemeLegend = (phonemes) => {
       const classes = ['ph-blue','ph-red','ph-yellow'];
-      return phonemes.slice(0,3).map((p, i) => colorSpan(p, classes[i])).join('  ');
+      return phonemes.slice(0,3).map((p, i) => `<span class="ph-chip ${classes[i]}">${p}</span>`).join('');
     };
+
+    // Highlight engine using optional patterns (regex strings)
+    function highlightWithPatterns(text, patternsByIdx) {
+      if (!patternsByIdx || !patternsByIdx.length) return text;
+      const classes = ['ph-blue','ph-red','ph-yellow'];
+      const matches = [];
+      patternsByIdx.slice(0,3).forEach((arr, idx) => {
+        (arr || []).forEach(pat => {
+          try {
+            const re = new RegExp(pat, 'gi');
+            let m;
+            while ((m = re.exec(text)) !== null) {
+              matches.push({ start: m.index, end: m.index + m[0].length, idx, str: m[0] });
+              // avoid zero-length loops
+              if (re.lastIndex === m.index) re.lastIndex++;
+            }
+          } catch(e) { /* ignore bad regex */ }
+        });
+      });
+      // sort by start then longer first so larger spans win, then pick non-overlapping
+      matches.sort((a,b)=> a.start - b.start || (b.end - b.start) - (a.end - a.start));
+      const picked = [];
+      let lastEnd = -1;
+      for (const m of matches) {
+        if (m.start >= lastEnd) { picked.push(m); lastEnd = m.end; }
+      }
+      if (!picked.length) return text;
+      // build output
+      let out = '';
+      let cursor = 0;
+      picked.forEach(m => {
+        out += text.slice(cursor, m.start);
+        out += `<span class="${classes[m.idx]}">` + text.slice(m.start, m.end) + '</span>';
+        cursor = m.end;
+      });
+      out += text.slice(cursor);
+      return out;
+    }
+
     const switchMode = (mode) => {
       Object.values(views).forEach(v => v.classList.add('hidden'));
       Object.values(tabs).forEach(t => t.classList.remove('tab-active'));
@@ -324,8 +366,8 @@ html_template = r'''
         return;
       }
       antonymFeedback.textContent = '';
-      currentAntonymQuestion = antonymData[Math.floor(Math.random() * antonymData.length)];
-      const choices = shuffleArray([...(currentAntonymQuestion.s || []), currentAntonymQuestion.a]);
+      const q = antonymData[Math.floor(Math.random() * antonymData.length)];
+      const choices = shuffleArray([...(q.s || []), q.a]);
       antonymChoicesContainer.innerHTML = '';
       choices.forEach(choice => {
         const b = document.createElement('button');
@@ -335,16 +377,11 @@ html_template = r'''
           const buttons = antonymChoicesContainer.querySelectorAll('button');
           buttons.forEach(btn => {
             btn.disabled = true;
-            if (btn.textContent === currentAntonymQuestion.a) btn.classList.add('correct');
+            if (btn.textContent === q.a) btn.classList.add('correct');
             else if (btn.textContent === choice) btn.classList.add('incorrect');
           });
-          if (choice === currentAntonymQuestion.a) {
-            antonymFeedback.textContent = 'Correct!';
-            antonymFeedback.className = 'h-6 text-center font-medium text-green-600';
-          } else {
-            antonymFeedback.textContent = 'Not quite. Try the next one!';
-            antonymFeedback.className = 'h-6 text-center font-medium text-red-600';
-          }
+          antonymFeedback.textContent = (choice === q.a) ? 'Correct!' : 'Not quite. Try the next one!';
+          antonymFeedback.className = 'h-6 text-center font-medium ' + ((choice === q.a) ? 'text-green-600' : 'text-red-600');
           setTimeout(setupAntonymGame, 1600);
         };
         antonymChoicesContainer.appendChild(b);
@@ -375,13 +412,9 @@ html_template = r'''
             if (btn.textContent === currentPronunciationQuestion.correct) btn.classList.add('correct');
             else if (btn.textContent === choice) btn.classList.add('incorrect');
           });
-          if (choice === currentPronunciationQuestion.correct) {
-            pronunciationFeedback.textContent = 'Correct!';
-            pronunciationFeedback.className = 'h-6 text-center font-medium text-green-600';
-          } else {
-            pronunciationFeedback.textContent = 'Not quite. Try the next one!';
-            pronunciationFeedback.className = 'h-6 text-center font-medium text-red-600';
-          }
+          const ok = (choice === currentPronunciationQuestion.correct);
+          pronunciationFeedback.textContent = ok ? 'Correct!' : 'Not quite. Try the next one!';
+          pronunciationFeedback.className = 'h-6 text-center font-medium ' + (ok ? 'text-green-600' : 'text-red-600');
           setTimeout(setupPronunciationGame, 1600);
         };
         pronunciationChoicesContainer.appendChild(b);
@@ -420,13 +453,9 @@ html_template = r'''
             if (btn.textContent === currentMinimalPairsQuestion.target) btn.classList.add('correct');
             else if (btn.textContent === choice) btn.classList.add('incorrect');
           });
-          if (choice === currentMinimalPairsQuestion.target) {
-            minimalPairsFeedback.textContent = 'Correct!';
-            minimalPairsFeedback.className = 'h-6 text-center font-medium text-green-600';
-          } else {
-            minimalPairsFeedback.textContent = 'Not quite. Try the next one!';
-            minimalPairsFeedback.className = 'h-6 text-center font-medium text-red-600';
-          }
+          const ok = (choice === currentMinimalPairsQuestion.target);
+          minimalPairsFeedback.textContent = ok ? 'Correct!' : 'Not quite. Try the next one!';
+          minimalPairsFeedback.className = 'h-6 text-center font-medium ' + (ok ? 'text-green-600' : 'text-red-600');
           setTimeout(setupMinimalPairsGame, 1600);
         };
         minimalPairsChoicesContainer.appendChild(b);
@@ -441,6 +470,18 @@ html_template = r'''
     });
 
     // --- Tongue Twister (flashcards) ---
+    function computeHighlightedSentence(item) {
+      // Priority 1: inline [[1]]..[[/]] markers already transformed
+      const hadInline = item.htmlMarked && item.htmlMarked !== item.sentence;
+      if (hadInline) return item.htmlMarked;
+      // Priority 2: patterns-based highlighting from data.json
+      if (item.patterns && item.patterns.length) {
+        return highlightWithPatterns(item.sentence, item.patterns);
+      }
+      // Fallback: plain text if no guidance
+      return item.sentence;
+    }
+
     const updateTwView = () => {
       if (!twDeck.length) {
         twGroupEl.textContent = '';
@@ -452,11 +493,7 @@ html_template = r'''
       const item = twDeck[twIndex];
       twGroupEl.textContent = item.group || '';
       twPhonemesEl.innerHTML = renderPhonemeLegend(item.phonemes || []);
-      if (item.html && item.html !== item.sentence) {
-        twSentenceEl.innerHTML = item.html;
-      } else {
-        twSentenceEl.textContent = item.sentence || '';
-      }
+      twSentenceEl.innerHTML = computeHighlightedSentence(item);
       twCounter.textContent = `${twIndex + 1} / ${twDeck.length}`;
     };
 
@@ -485,3 +522,4 @@ html_content = html_template.replace(
 )
 
 components.html(html_content, height=900, scrolling=True)
+```
