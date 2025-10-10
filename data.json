@@ -192,8 +192,7 @@
 
 
   "pronunciation": [
-    /eiki/
-
+    //eiki
     { "correct": "helicopter", "distractors": ["helecopter", "helicoptor", "hellicopter"], "translation": "直升机" },
     { "correct": "tram", "distractors": ["trum", "tramm", "tarm"], "translation": "有轨电车" },
     { "correct": "cab", "distractors": ["kab", "cabb", "cap"], "translation": "出租车" },
