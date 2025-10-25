@@ -28,8 +28,6 @@ payload = {
     "pronunciationData": data.get("pronunciationData") or data.get("pronunciation") or [],
     "minimalPairsData": data.get("minimalPairsData") or data.get("minimalPairs") or [],
     "vocabData": data.get("vocabData") or [],
-    # Tongue twisters must live in data.json. Optional: "patterns" per group to auto-highlight.
-    # patterns format: [ ["regex1","regex2"], ["regex3"], ["regex4"] ] for up to 3 phoneme groups.
     "tongueTwisterData": (
         data.get("tongueTwisterData")
         or data.get("tongueTwisters")
@@ -201,11 +199,10 @@ html_template = r'''
     const minimalPairsData = safeArray(window.APP_DATA.minimalPairsData);
     const tongueTwisterData = safeArray(window.APP_DATA.tongueTwisterData);
 
-    // Build deck [{group, phonemes, patterns?, sentence, htmlMarked?}]
+    // Build deck
     const twDeck = [];
     tongueTwisterData.forEach(g => {
       (g.sentences || []).forEach(s => {
-        // Inline markup support first: [[1]]...[[/]], [[2]]...[[/]], [[3]]...[[/]]
         const htmlMarked = ('' + s)
           .replace(/\[\[1\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-blue">$1</span>')
           .replace(/\[\[2\]\]([\s\S]*?)\[\[\/\]\]/g, '<span class="ph-red">$1</span>')
@@ -285,13 +282,11 @@ html_template = r'''
       }
       return array;
     };
-    const colorSpan = (txt, cls) => `<span class="${cls}">${txt}</span>`;
     const renderPhonemeLegend = (phonemes) => {
       const classes = ['ph-blue','ph-red','ph-yellow'];
       return phonemes.slice(0,3).map((p, i) => `<span class="ph-chip ${classes[i]}">${p}</span>`).join('');
     };
 
-    // Highlight engine using optional patterns (regex strings)
     function highlightWithPatterns(text, patternsByIdx) {
       if (!patternsByIdx || !patternsByIdx.length) return text;
       const classes = ['ph-blue','ph-red','ph-yellow'];
@@ -303,13 +298,11 @@ html_template = r'''
             let m;
             while ((m = re.exec(text)) !== null) {
               matches.push({ start: m.index, end: m.index + m[0].length, idx, str: m[0] });
-              // avoid zero-length loops
               if (re.lastIndex === m.index) re.lastIndex++;
             }
-          } catch(e) { /* ignore bad regex */ }
+          } catch(e) { }
         });
       });
-      // sort by start then longer first so larger spans win, then pick non-overlapping
       matches.sort((a,b)=> a.start - b.start || (b.end - b.start) - (a.end - a.start));
       const picked = [];
       let lastEnd = -1;
@@ -317,7 +310,6 @@ html_template = r'''
         if (m.start >= lastEnd) { picked.push(m); lastEnd = m.end; }
       }
       if (!picked.length) return text;
-      // build output
       let out = '';
       let cursor = 0;
       picked.forEach(m => {
@@ -342,8 +334,9 @@ html_template = r'''
 
     // --- Flashcards ---
     const updateFlashcardView = () => {
+      const word = correctList[currentcorrectIndex] || '';
       flashcardInstruction.classList.remove('hidden');
-      correctText.textContent = correctList[currentcorrectIndex] || '';
+      correctText.textContent = word;
       correctText.classList.add('invisible');
       correctCounter.textContent = `${correctList.length ? currentcorrectIndex + 1 : 0} / ${correctList.length}`;
     };
@@ -356,6 +349,27 @@ html_template = r'''
         updateFlashcardView();
       }
     };
+
+    // Flashcards wiring (fix for no response to click)
+    saveListBtn.addEventListener('click', savecorrectList);
+    playAudioBtn.addEventListener('click', () => {
+      if (!correctList.length) return;
+      speak(correctList[currentcorrectIndex], 0.95);
+    });
+    revealcorrectBtn.addEventListener('click', () => {
+      correctText.classList.remove('invisible');
+      flashcardInstruction.classList.add('hidden');
+    });
+    prevcorrectBtn.addEventListener('click', () => {
+      if (!correctList.length) return;
+      currentcorrectIndex = (currentcorrectIndex - 1 + correctList.length) % correctList.length;
+      updateFlashcardView();
+    });
+    nextcorrectBtn.addEventListener('click', () => {
+      if (!correctList.length) return;
+      currentcorrectIndex = (currentcorrectIndex + 1) % correctList.length;
+      updateFlashcardView();
+    });
 
     // --- Antonym Game ---
     const setupAntonymGame = () => {
@@ -470,14 +484,11 @@ html_template = r'''
 
     // --- Tongue Twister (flashcards) ---
     function computeHighlightedSentence(item) {
-      // Priority 1: inline [[1]]..[[/]] markers already transformed
       const hadInline = item.htmlMarked && item.htmlMarked !== item.sentence;
       if (hadInline) return item.htmlMarked;
-      // Priority 2: patterns-based highlighting from data.json
       if (item.patterns && item.patterns.length) {
         return highlightWithPatterns(item.sentence, item.patterns);
       }
-      // Fallback: plain text if no guidance
       return item.sentence;
     }
 
@@ -521,4 +532,3 @@ html_content = html_template.replace(
 )
 
 components.html(html_content, height=900, scrolling=True)
-
