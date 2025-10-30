@@ -619,7 +619,7 @@
 { "correct": "tenant", "distractors": ["tenent", "tennat", "tenan t"], "translation": "房客；承租人" },
 { "correct": "landlady", "distractors": ["landl ady", "landladyy", "landlody"], "translation": "女房东" },
 { "correct": "landlord", "distractors": ["landl ord", "landlo rd", "landlrod"], "translation": "房东" }
- ]
+ ],
 "minimalPairs": [
 { "correct": "desert", "distractor": "dessert" },
 { "correct": "metal", "distractor": "medal" },
